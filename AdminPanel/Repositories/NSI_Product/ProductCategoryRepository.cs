@@ -26,13 +26,22 @@ namespace AdminPanel.Core.Repositories.NSI_Product
 				return new NpgsqlConnection(connectionString);
 			}
 		}
+		/* GETALL */
+		public async Task<IEnumerable<ProductCategoryModel>> GetAll()
+		{
+			using (IDbConnection dbConnection = Connection)
+			{
+				dbConnection.Open();
+				return await dbConnection.QueryAsync<ProductCategoryModel>("select * from product_categories");
+			}
+		}
 		/* GET */
 		public async Task<string> GetByIDAsync(Guid categoryId)
 		{
 			using (IDbConnection dbConnection = Connection)
 			{
 				dbConnection.Open();
-				return await dbConnection.ExecuteScalarAsync<string>("select ru_name from product_categories where id = " + '\u0027' + categoryId + '\u0027');
+				return await dbConnection.ExecuteScalarAsync<string>("select * from product_categories where ru_name = " + '\u0027');
 			}
 		}
 		public Task<ProductCategoryModel> GetByNumber(int number)

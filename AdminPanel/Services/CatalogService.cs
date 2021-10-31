@@ -41,6 +41,16 @@ namespace AdminPanel.Services
 
 			return new RequestResult { status = ResultStatus.Ok, message = "", result = _categories };
 		}
+		
+		///////////////////////////////////////////////////////////////////////////////////////////
+		public async Task<RequestResult> GetAllCategories()
+		{
+			var cats = await new ProductCategoryRepository().GetAll();
+			
+			// _categories = (List<ResponseCategory>)await new ProductCategoryRepository().GetChildrenAsync(car.id);
+
+			return new RequestResult { status = ResultStatus.Ok, message = "", result = cats };
+		}
 		///////////////////////////////////////////////////////////////////////////////////////////
 		public async Task<RequestResult> GetVendorCard(Guid clientId, string vendorNumber)
 		{

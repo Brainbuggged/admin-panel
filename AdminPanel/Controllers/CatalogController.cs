@@ -49,6 +49,26 @@ namespace AdminPanel.WEB.Controllers
 				return new ObjectResult(new CustomInternalServerError("Что-то пошло не так в /get-categories", ex.Message));
 			}
 		}
+		
+		/// <summary>
+		/// Возвращает список всех-категорий
+		/// </summary>
+		[Route("get-all-categories")]
+		[HttpGet]
+		[Produces("application/json")]
+		public async Task<IActionResult> GetAllCategories()
+		{
+			try
+			{
+				var result = await catalogService.GetAllCategories();
+
+				return new ObjectResultCreator().CreateObjectResult(result);
+			}
+			catch (Exception ex)
+			{
+				return new ObjectResult(new CustomInternalServerError("Что-то пошло не так в /get-all-categories"+ ex.StackTrace, ex.Message ));
+			}
+		}
 
 
 		/// <summary>
