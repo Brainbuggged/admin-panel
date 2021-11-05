@@ -73,12 +73,6 @@ namespace AdminPanel.Controllers
 		{
 			try
 			{
-				if (!HttpContext.User.Identity.IsAuthenticated)
-					return new ObjectResult(new CustomUnauthorized("Доступ запрещен. Требуется авторизация."));
-				else
-					if (HttpContext.User.Claims.Single(item => item.Type == ClaimsIdentity.DefaultRoleClaimType).Value != "Продавец")
-					return new ObjectResult(new CustomForbidden("Доступ запрещен. Требуется роль 'Продавец'."));
-
 				var validator = new ProductChecker().Check_OpenDraftRequest(query);
 				if (validator != null)
 					return new ObjectResult(validator);
@@ -105,12 +99,6 @@ namespace AdminPanel.Controllers
 		{
 			try
 			{
-				if (!HttpContext.User.Identity.IsAuthenticated)
-					return new ObjectResult(new CustomUnauthorized("Доступ запрещен. Требуется авторизация."));
-				else
-					if (HttpContext.User.Claims.Single(item => item.Type == ClaimsIdentity.DefaultRoleClaimType).Value != "Продавец")
-					return new ObjectResult(new CustomForbidden("Доступ запрещен. Требуется роль 'Продавец'."));
-
 				var validator = new ProductChecker().Check_CloseDraftRequest(query);
 				if (validator != null)
 					return new ObjectResult(validator);
@@ -137,12 +125,6 @@ namespace AdminPanel.Controllers
 		{
 			try
 			{
-				if (!HttpContext.User.Identity.IsAuthenticated)
-					return new ObjectResult(new CustomUnauthorized("Доступ запрещен. Требуется авторизация."));
-				else
-					if (HttpContext.User.Claims.Single(item => item.Type == ClaimsIdentity.DefaultRoleClaimType).Value != "Продавец")
-					return new ObjectResult(new CustomForbidden("Доступ запрещен. Требуется роль 'Продавец'."));
-
 				var validator = new ProductChecker().Check_GetProductToUpdate(query);
 				if (validator != null)
 					return new ObjectResult(validator);
@@ -168,12 +150,6 @@ namespace AdminPanel.Controllers
 		{
 			try
 			{
-				if (!HttpContext.User.Identity.IsAuthenticated)
-					return new ObjectResult(new CustomUnauthorized("Доступ запрещен. Требуется авторизация."));
-				else
-					if (HttpContext.User.Claims.Single(item => item.Type == ClaimsIdentity.DefaultRoleClaimType).Value != "Продавец")
-					return new ObjectResult(new CustomForbidden("Доступ запрещен. Требуется роль 'Продавец'."));
-
 				var validator = new ProductChecker().Check_ArchiveProduct(query);
 				if (validator != null)
 					return new ObjectResult(validator);
@@ -200,11 +176,6 @@ namespace AdminPanel.Controllers
 		{
 			try
 			{
-				if (!HttpContext.User.Identity.IsAuthenticated)
-					return new ObjectResult(new CustomUnauthorized("Доступ запрещен. Требуется авторизация."));
-				else
-					if (HttpContext.User.Claims.Single(item => item.Type == ClaimsIdentity.DefaultRoleClaimType).Value != "Продавец")
-					return new ObjectResult(new CustomForbidden("Доступ запрещен. Требуется роль 'Продавец'."));
 
 				var validator = new ProductChecker().Check_ActivateProduct(query);
 				if (validator != null)
@@ -232,12 +203,6 @@ namespace AdminPanel.Controllers
 		{
 			try
 			{
-				if (!HttpContext.User.Identity.IsAuthenticated)
-					return new ObjectResult(new CustomUnauthorized("Доступ запрещен. Требуется авторизация."));
-				else
-					if (HttpContext.User.Claims.Single(item => item.Type == ClaimsIdentity.DefaultRoleClaimType).Value != "Продавец")
-					return new ObjectResult(new CustomForbidden("Доступ запрещен. Требуется роль 'Продавец'."));
-
 				var validator = new ProductChecker().Check_DeactivateProduct(query);
 				if (validator != null)
 					return new ObjectResult(validator);
@@ -264,12 +229,6 @@ namespace AdminPanel.Controllers
 		{
 			try
 			{
-				if (!HttpContext.User.Identity.IsAuthenticated)
-					return new ObjectResult(new CustomUnauthorized("Доступ запрещен. Требуется авторизация."));
-				else
-					if (HttpContext.User.Claims.Single(item => item.Type == ClaimsIdentity.DefaultRoleClaimType).Value != "Продавец")
-					return new ObjectResult(new CustomForbidden("Доступ запрещен. Требуется роль 'Продавец'."));
-
 				var clientId = Guid.Parse(HttpContext.User.Claims.First(item => item.Type == "id").Value);
 
 				var result = await productService.GetMyProducts(clientId);
@@ -292,11 +251,6 @@ namespace AdminPanel.Controllers
 		{
 			try
 			{
-				if (!HttpContext.User.Identity.IsAuthenticated)
-					return new ObjectResult(new CustomUnauthorized("Доступ запрещен. Требуется авторизация."));
-				else
-					if (HttpContext.User.Claims.Single(item => item.Type == ClaimsIdentity.DefaultRoleClaimType).Value != "Продавец")
-					return new ObjectResult(new CustomForbidden("Доступ запрещен. Требуется роль 'Продавец'."));
 
 				var clientId = Guid.Parse(HttpContext.User.Claims.First(item => item.Type == "id").Value);
 
@@ -320,11 +274,6 @@ namespace AdminPanel.Controllers
 		{
 			try
 			{
-				if (!HttpContext.User.Identity.IsAuthenticated)
-					return new ObjectResult(new CustomUnauthorized("Доступ запрещен. Требуется авторизация."));
-				else
-					if (HttpContext.User.Claims.Single(item => item.Type == ClaimsIdentity.DefaultRoleClaimType).Value != "Продавец")
-					return new ObjectResult(new CustomForbidden("Доступ запрещен. Требуется роль 'Продавец'."));
 
 				var clientId = Guid.Parse(HttpContext.User.Claims.First(item => item.Type == "id").Value);
 
@@ -348,11 +297,6 @@ namespace AdminPanel.Controllers
 		{
 			try
 			{
-				if (!HttpContext.User.Identity.IsAuthenticated)
-					return new ObjectResult(new CustomUnauthorized("Доступ запрещен. Требуется авторизация."));
-				else
-					if (HttpContext.User.Claims.Single(item => item.Type == ClaimsIdentity.DefaultRoleClaimType).Value != "Продавец")
-					return new ObjectResult(new CustomForbidden("Доступ запрещен. Требуется роль 'Продавец'."));
 
 				var validator = new ProductChecker().Check_ChangeMyProductCount(query);
 				if (validator != null)
@@ -380,12 +324,6 @@ namespace AdminPanel.Controllers
 		{
 			try
 			{
-				if (!HttpContext.User.Identity.IsAuthenticated)
-					return new ObjectResult(new CustomUnauthorized("Доступ запрещен. Требуется авторизация."));
-				else
-					if (HttpContext.User.Claims.Single(item => item.Type == ClaimsIdentity.DefaultRoleClaimType).Value != "Продавец")
-					return new ObjectResult(new CustomForbidden("Доступ запрещен. Требуется роль 'Продавец'."));
-
 				var validator = new ProductChecker().Check_ChangeMyProductDelivery(query);
 				if (validator != null)
 					return new ObjectResult(validator);
@@ -412,18 +350,12 @@ namespace AdminPanel.Controllers
 		{
 			try
 			{
-				if (!HttpContext.User.Identity.IsAuthenticated)
-					return new ObjectResult(new CustomUnauthorized("Доступ запрещен. Требуется авторизация."));
-				else
-					if (HttpContext.User.Claims.Single(item => item.Type == ClaimsIdentity.DefaultRoleClaimType).Value != "Продавец")
-					return new ObjectResult(new CustomForbidden("Доступ запрещен. Требуется роль 'Продавец'."));
-
 				var validator = new ProductChecker().Check_UpdateProduct(query);
 				if (validator != null)
 					return new ObjectResult(validator);
 
 				var clientId = Guid.Parse(HttpContext.User.Claims.First(item => item.Type == "id").Value);
-				var result = await productService.UpdateProduct(clientId, query);
+				var result = await productService.UpdateProduct(query);
 
 				return new ObjectResultCreator().CreateObjectResult(result);
 			}
