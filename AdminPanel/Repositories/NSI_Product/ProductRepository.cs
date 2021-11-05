@@ -351,12 +351,12 @@ namespace AdminPanel.Core.Repositories.NSI_Product
 				return await dbConnection.QueryFirstOrDefaultAsync<ProductModel>(_request);
 			}
 		}
-		public async Task<ProductModel> GetByNumberAndVendorAsync(Guid productId, Guid vendorId)
+		public async Task<ProductModel> GetByNumberAndVendorAsync(Guid productId)
 		{
 			using (IDbConnection dbConnection = Connection)
 			{
 				dbConnection.Open();
-				return await dbConnection.QuerySingleOrDefaultAsync<ProductModel>($"select number, id, status, is_delivery_expected, count from products where id = " + '\u0027' + productId + '\u0027' + " and vendorid = " + '\u0027' + vendorId + '\u0027');
+				return await dbConnection.QuerySingleOrDefaultAsync<ProductModel>($"select number, id, status, is_delivery_expected, count from products where id = " + '\u0027' + productId + '\u0027' + " and vendorid = " + '\u0027' );
 			}
 		}
 		public async Task<IEnumerable<ResponseMyProduct>> GetMyProductsAsync(Guid vendorId)

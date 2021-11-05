@@ -145,7 +145,7 @@ namespace AdminPanel.Services
 			if (client.role != RoleType.Seller)
 				return new RequestResult { status = ResultStatus.UnprocessableEntity, message = $"Клиент с идентификатором {clientId}  не является продавцом", result = null };
 
-			var product = await new ProductRepository().GetByNumberAndVendorAsync(productId, (Guid)client.vendorid);
+			var product = await new ProductRepository().GetByNumberAndVendorAsync(productId);
 			if (product == null)
 				return new RequestResult { status = ResultStatus.UnprocessableEntity, message = $"Товар с идентификатором {productId} не существует", result = null };
 			if (product.status == ProductStatus.Archive)
@@ -164,7 +164,7 @@ namespace AdminPanel.Services
 			if (client.role != RoleType.Seller)
 				return new RequestResult { status = ResultStatus.UnprocessableEntity, message = $"Клиент с идентификатором {clientId}  не является продавцом", result = null };
 
-			var product = await new ProductRepository().GetByNumberAndVendorAsync(productId, (Guid)client.vendorid);
+			var product = await new ProductRepository().GetByNumberAndVendorAsync(productId);
 			if (product == null)
 				return new RequestResult { status = ResultStatus.UnprocessableEntity, message = $"Товар с идентификатором {productId} не существует", result = null };
 			if (product.status == ProductStatus.Snyat)
@@ -183,7 +183,7 @@ namespace AdminPanel.Services
 			if (client.role != RoleType.Seller)
 				return new RequestResult { status = ResultStatus.UnprocessableEntity, message = $"Клиент с идентификатором {clientId}  не является продавцом", result = null };
 
-			var product = await new ProductRepository().GetByNumberAndVendorAsync(productId, (Guid)client.vendorid);
+			var product = await new ProductRepository().GetByNumberAndVendorAsync(productId);
 			if (product == null)
 				return new RequestResult { status = ResultStatus.UnprocessableEntity, message = $"Товар с идентификатором {productId} не существует", result = null };
 			if (product.status == ProductStatus.Vistavlen)
@@ -202,7 +202,7 @@ namespace AdminPanel.Services
 			if (client.role != RoleType.Seller)
 				return new RequestResult { status = ResultStatus.UnprocessableEntity, message = $"Клиент с идентификатором {clientId}  не является продавцом", result = null };
 
-			var product = await new ProductRepository().GetByNumberAndVendorAsync(productId, (Guid)client.vendorid);
+			var product = await new ProductRepository().GetByNumberAndVendorAsync(productId);
 			if (product == null)
 				return new RequestResult { status = ResultStatus.UnprocessableEntity, message = $"Товар с идентификатором {productId} не существует", result = null };
 			if (product.type == ProductType.BU && productCount > 1)
@@ -221,7 +221,7 @@ namespace AdminPanel.Services
 			if (client.role != RoleType.Seller)
 				return new RequestResult { status = ResultStatus.UnprocessableEntity, message = $"Клиент с идентификатором {clientId}  не является продавцом", result = null };
 
-			var product = await new ProductRepository().GetByNumberAndVendorAsync(productId, (Guid)client.vendorid);
+			var product = await new ProductRepository().GetByNumberAndVendorAsync(productId);
 			if (product == null)
 				return new RequestResult { status = ResultStatus.UnprocessableEntity, message = $"Товар с идентификатором {productId} не найден", result = null };
 			if (product.count != 0)
@@ -286,16 +286,8 @@ namespace AdminPanel.Services
 			return new RequestResult { status = ResultStatus.Ok, message = "", result = myProducts };
 		}
 		///////////////////////////////////////////////////////////////////////////////////////////
-		public async Task<RequestResult> UpdateProduct(Guid clientId, updateProduct updateProduct)
+		public async Task<RequestResult> UpdateProduct(updateProduct updateProduct)
 		{
-			var client = await new ClientRepository().GetByIDAsync(clientId);
-			if (client == null)
-				return new RequestResult { status = ResultStatus.UnprocessableEntity, message = $"Клиент с идентификатором {clientId} не найден", result = null };
-			if (client.role != RoleType.Seller)
-				return new RequestResult { status = ResultStatus.UnprocessableEntity, message = $"Клиент с идентификатором {clientId}  не является продавцом", result = null };
-
-			var vendor = await new VendorRepository().GetVendorByIdAsync((Guid)client.vendorid);
-			///
 			var par_category = await new CategoryRepository().GetByNameAsync(updateProduct.product_category);
 
 			var checkProduct = await new NewObjectsChecker().CheckUpdateProduct(updateProduct);
@@ -304,10 +296,10 @@ namespace AdminPanel.Services
 			///
 			updateProduct = (updateProduct)checkProduct.result;
 
-			var product = await new ProductRepository().GetByNumberAndVendorAsync(updateProduct.product_id, (Guid)client.vendorid);
+			var product = await new ProductRepository().GetByNumberAndVendorAsync(updateProduct.product_id);
 			if (product == null)
 				return new RequestResult { status = ResultStatus.UnprocessableEntity, message = $"Товар с идентификатором {updateProduct.product_id} не является вашим", result = null };
-
+			
 			await new ProductRepository().UpdateAsync(updateProduct);
 			await new ProductPropertiesRepository().RemoveByProductIdAsync(product.id);
 			await new ProductPhotoesRepository().RemoveByProductIdAsync(product.id);
