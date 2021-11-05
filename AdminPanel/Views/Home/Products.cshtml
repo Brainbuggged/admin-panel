@@ -1,0 +1,59 @@
+﻿@model IEnumerable<AdminPanel.Models.Models.NSI_Product.ProductCategoryModel>
+
+@{
+    ViewData["Title"] = "Products";
+}
+
+<h1>Products</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.parentid)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ru_name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.en_name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.is_last)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.photo)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.parentid)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ru_name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.en_name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.is_last)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.photo)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
