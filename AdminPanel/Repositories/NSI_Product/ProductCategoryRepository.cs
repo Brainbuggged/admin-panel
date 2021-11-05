@@ -26,7 +26,7 @@ namespace AdminPanel.Core.Repositories.NSI_Product
 				return new NpgsqlConnection(connectionString);
 			}
 		}
-		/* GETALL */
+		/* GET ALL */
 		public async Task<IEnumerable<ProductCategoryModel>> GetAll()
 		{
 			using (IDbConnection dbConnection = Connection)

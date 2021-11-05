@@ -46,7 +46,10 @@
                 @Html.DisplayFor(modelItem => item.is_last)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.photo)
+                @{
+                    var photoimage = item.photo;
+                 }
+                <img src="https://drive.google.com/uc?export=view&id=@photoimage" width="100px" height="100px"/>
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.id">Edit</a> |

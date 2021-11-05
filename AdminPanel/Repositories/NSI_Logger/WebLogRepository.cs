@@ -4,6 +4,7 @@ using AdminPanel.Models.Models.NSI_Logger;
 using System.Data;
 using System.Threading.Tasks;
 using AdminPanel.Extensions;
+using System.Collections.Generic;
 
 namespace AdminPanel.Core.Repositories.NSI_Logger
 {
@@ -23,6 +24,15 @@ namespace AdminPanel.Core.Repositories.NSI_Logger
 		}
 
 		/* GET */
+		/* GET ALL */
+		public async Task<IEnumerable<WebLogModel>> GetAll()
+		{
+			using (IDbConnection dbConnection = Connection)
+			{
+				dbConnection.Open();
+				return await dbConnection.QueryAsync<WebLogModel>("select * from web_logs");
+			}
+		}
 		/* INSERT */
 		public async Task AddAsync(WebLogModel webLog)
 		{

@@ -9,6 +9,7 @@ using AdminPanel.Models;
 using AdminPanel.Core.Repositories.NSI_Product;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using AdminPanel.Core.Repositories.NSI_Client;
+using AdminPanel.Core.Repositories.NSI_Logger;
 
 namespace WebApplication.Controllers
 {
@@ -35,17 +36,26 @@ namespace WebApplication.Controllers
         {
             ClientRepository rep = new ClientRepository();
             var list =  await rep.GetAll();
+
             return View(list);
         }
 
-        public async Task<IActionResult> Products()
+        //public async Task<IActionResult> Products()
+        //{
+        //    ProductCategoryRepository rep = new ProductCategoryRepository();
+        //    var list =  await rep.GetAll();
+
+        //    return View(list);
+        //}
+
+        public async Task<IActionResult> Logs()
         {
-            ProductCategoryRepository rep = new ProductCategoryRepository();
-            var list =  await rep.GetAll();
+            WebLogRepository rep = new WebLogRepository();
+            var list = await rep.GetAll();
 
             return View(list);
         }
-        
+
         public IActionResult Categories()
         {
             return View();
