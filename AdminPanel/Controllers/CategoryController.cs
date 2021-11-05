@@ -50,6 +50,34 @@ namespace AdminPanel.Controllers
 				return new ObjectResult(new CustomInternalServerError("Что-то пошло не так в /add-category", ex.Message));
 			}
 		}
+		/// <summary>
+		/// Добавляет новый параметр к выбранной категории
+		/// </summary>
+		[Route("add-category-parameter")]
+		[HttpPost]
+		public async Task<IActionResult> AddCategoryParameter([FromBody] addCategoryParameter query)
+		{
+			try
+			{
+				if (!HttpContext.User.Identity.IsAuthenticated)
+					return new ObjectResult(new CustomUnauthorized("Доступ запрещен. Требуется авторизация."));
+
+				var validator = new CategoryChecker().Check_AddCategoryParameter(query);
+				if (validator != null)
+					return new ObjectResult(validator);
+
+				var clientId = Guid.Parse(HttpContext.User.Claims.First(item => item.Type == "id").Value);
+				var result = await categoryService.AddCategoryParameter(query.categoryName, query.parameterName);
+
+				return new ObjectResultCreator().CreateObjectResult(result);
+			}
+			catch (Exception ex)
+			{
+				return new ObjectResult(new CustomInternalServerError("Что-то пошло не так в /add-category-parameter", ex.Message));
+			}
+		}
 
 	}
+	
+	
 }

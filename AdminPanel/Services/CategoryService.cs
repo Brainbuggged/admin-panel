@@ -60,5 +60,26 @@ namespace AdminPanel.Services
 
 			return new RequestResult { status = ResultStatus.Accepted, message = $"Категория {newCategory.categoryRuName}/{addingCategory.en_name} успешно добавлена", result = null };
 		}
+		
+		/////////////////////////////////////////////////////////////////////////////
+		public async Task<RequestResult> AddCategoryParameter(string categoryName, string parameterName)
+		{
+			var category = await new CategoryRepository().GetByNameAsync(categoryName);
+			if (category == null)
+				return new RequestResult { status = ResultStatus.UnprocessableEntity, message = $"Категория с названием {categoryName} не сущевтует", result = null };
+
+			if (await new ParameterRepository().GetByNameAndCategoryAsync(category.id, parameterName) != null)
+				return new RequestResult { status = ResultStatus.UnprocessableEntity, message = $"Категория с названием {categoryName} уже содержит параметр {parameterName}", result = null };
+
+			var catParameter = new ParameterModel
+			{
+				id = Guid.NewGuid(),
+				name = parameterName,
+				categoryid = category.id
+			};
+
+			await new ParameterRepository().AddAsync(catParameter);
+			return new RequestResult { status = ResultStatus.Accepted, message = $"Параметр {parameterName} успешно добавлен", result = null };
+		}
 	}
 }
