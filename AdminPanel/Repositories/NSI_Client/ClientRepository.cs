@@ -5,6 +5,7 @@ using System;
 using System.Data;
 using System.Threading.Tasks;
 using AdminPanel.Extensions;
+using System.Collections.Generic;
 
 namespace AdminPanel.Core.Repositories.NSI_Client
 {
@@ -22,6 +23,16 @@ namespace AdminPanel.Core.Repositories.NSI_Client
 			get
 			{
 				return new NpgsqlConnection(connectionString);
+			}
+		}
+
+		/* GETALL */
+		public async Task<IEnumerable<ClientModel>> GetAll()
+		{
+			using (IDbConnection dbConnection = Connection)
+			{
+				dbConnection.Open();
+				return await dbConnection.QueryAsync<ClientModel>("select * from clients");
 			}
 		}
 

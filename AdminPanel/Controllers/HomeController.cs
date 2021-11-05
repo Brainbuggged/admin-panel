@@ -1,4 +1,4 @@
-﻿using System;
+﻿ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -8,6 +8,7 @@ using Microsoft.Extensions.Logging;
 using AdminPanel.Models;
 using AdminPanel.Core.Repositories.NSI_Product;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using AdminPanel.Core.Repositories.NSI_Client;
 
 namespace WebApplication.Controllers
 {
@@ -30,9 +31,11 @@ namespace WebApplication.Controllers
             return View();
         }
 
-        public IActionResult Clients()
+        public async Task<IActionResult> Clients()
         {
-            return View();
+            ClientRepository rep = new ClientRepository();
+            var list =  await rep.GetAll();
+            return View(list);
         }
 
         public async Task<IActionResult> Products()
