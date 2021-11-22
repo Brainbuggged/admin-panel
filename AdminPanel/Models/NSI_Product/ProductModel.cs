@@ -29,6 +29,7 @@ namespace AdminPanel.Models.Models.NSI_Product
 		public bool is_delivered { get; set; }
 		public double x { get; set; }
 		public double y { get; set; }
+		public bool is_checked { get; set; }
 		public DateTime last_status_update { get; set; }
 
 		public Guid categoryid { get; set; }

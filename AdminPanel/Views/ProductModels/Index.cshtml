@@ -1,0 +1,113 @@
+﻿@model IEnumerable<AdminPanel.Models.Models.NSI_Product.ProductModel>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Товары</h1>
+
+<p>
+    <a asp-action="Create">Создать</a>
+</p>
+<table id="products" class="display" style="width:100%">
+    <thead>
+        <tr>
+            <th>
+                <p>Дата размещения</p>
+                @*@Html.DisplayNameFor(model => model.publication_date)*@
+            </th>
+            <th>
+                <p>Название</p>
+
+                @Html.DisplayNameFor(model => model.name)л
+            </th>
+            <th>
+                <p>Страна</p>
+                @*@Html.DisplayNameFor(model => model.country)*@
+            </th>
+            <th>
+                <p>Город</p>
+
+                @*@Html.DisplayNameFor(model => model.city)*@
+            </th>
+            <th>
+                <p>Категория</p>
+                @*@Html.DisplayNameFor(model => model.category)*@
+            </th>
+            <th>
+                <p>Тип</p>
+
+                @*@Html.DisplayNameFor(model => model.type)*@
+            </th>
+            <th>
+                <p>Цена</p>
+
+                @*@Html.DisplayNameFor(model => model.prise)*@
+            </th>
+            <th>
+                <p>Остаток</p>
+
+                @*@Html.DisplayNameFor(model => model.count)*@
+            </th>
+            <th>
+                <p>Рейтинг</p>
+                @*@Html.DisplayNameFor(model => model.rating)*@
+            </th>
+            <!--Изображение-->
+            <th>
+                <p>Статус</p>
+                @*@Html.DisplayNameFor(model => model.status)*@
+            </th>
+       
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.publication_date)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.country)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.city)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.category.id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.type)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.prise)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.count)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.rating)
+            </td>
+           
+            <td>
+                @Html.DisplayFor(modelItem => item.status)
+            </td>
+            @*<td>
+            <a asp-action="Edit" asp-route-id="@item.id">Edit</a> |
+            <a asp-action="Details" asp-route-id="@item.id">Details</a> |
+            <a asp-action="Delete" asp-route-id="@item.id">Delete</a>
+        </td>*@
+        </tr>
+        }
+    </tbody>
+</table>
+
+<script>
+    $(document).ready(function () {
+        $('#products').DataTable();
+    });
+</script>
