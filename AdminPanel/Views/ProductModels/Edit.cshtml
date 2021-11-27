@@ -1,0 +1,144 @@
+﻿@model AdminPanel.Models.Models.NSI_Product.ProductModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>ProductModel</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="id" />
+            <div class="form-group">
+                <label asp-for="number" class="control-label"></label>
+                <input asp-for="number" class="form-control" />
+                <span asp-validation-for="number" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="publication_date" class="control-label"></label>
+                <input asp-for="publication_date" class="form-control" />
+                <span asp-validation-for="publication_date" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="name" class="control-label"></label>
+                <input asp-for="name" class="form-control" />
+                <span asp-validation-for="name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="country" class="control-label"></label>
+                <input asp-for="country" class="form-control" />
+                <span asp-validation-for="country" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="city" class="control-label"></label>
+                <input asp-for="city" class="form-control" />
+                <span asp-validation-for="city" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="release_year" class="control-label"></label>
+                <input asp-for="release_year" class="form-control" />
+                <span asp-validation-for="release_year" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="type" class="control-label"></label>
+                <select asp-for="type" class="form-control"></select>
+                <span asp-validation-for="type" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="brand" class="control-label"></label>
+                <input asp-for="brand" class="form-control" />
+                <span asp-validation-for="brand" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="prise" class="control-label"></label>
+                <input asp-for="prise" class="form-control" />
+                <span asp-validation-for="prise" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="count" class="control-label"></label>
+                <input asp-for="count" class="form-control" />
+                <span asp-validation-for="count" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="is_delivery_expected" /> @Html.DisplayNameFor(model => model.is_delivery_expected)
+                </label>
+            </div>
+            <div class="form-group">
+                <label asp-for="description" class="control-label"></label>
+                <input asp-for="description" class="form-control" />
+                <span asp-validation-for="description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="address" class="control-label"></label>
+                <input asp-for="address" class="form-control" />
+                <span asp-validation-for="address" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="rating" class="control-label"></label>
+                <input asp-for="rating" class="form-control" />
+                <span asp-validation-for="rating" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="status" class="control-label"></label>
+                <select asp-for="status" class="form-control"></select>
+                <span asp-validation-for="status" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="is_pickuped" /> @Html.DisplayNameFor(model => model.is_pickuped)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="is_delivered" /> @Html.DisplayNameFor(model => model.is_delivered)
+                </label>
+            </div>
+            <div class="form-group">
+                <label asp-for="x" class="control-label"></label>
+                <input asp-for="x" class="form-control" />
+                <span asp-validation-for="x" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="y" class="control-label"></label>
+                <input asp-for="y" class="form-control" />
+                <span asp-validation-for="y" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="is_checked" /> @Html.DisplayNameFor(model => model.is_checked)
+                </label>
+            </div>
+            <div class="form-group">
+                <label asp-for="last_status_update" class="control-label"></label>
+                <input asp-for="last_status_update" class="form-control" />
+                <span asp-validation-for="last_status_update" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="categoryid" class="control-label"></label>
+                <select asp-for="categoryid" class="form-control" asp-items="ViewBag.categoryid"></select>
+                <span asp-validation-for="categoryid" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="vendorid" class="control-label"></label>
+                <select asp-for="vendorid" class="form-control" asp-items="ViewBag.vendorid"></select>
+                <span asp-validation-for="vendorid" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

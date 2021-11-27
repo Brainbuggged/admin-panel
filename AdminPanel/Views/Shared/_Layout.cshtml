@@ -12,9 +12,9 @@
     <link rel="stylesheet" href="~/DataTables/datatables.min.css">
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container">
+    <header style="background-color:blue;">
+        <nav  class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div id="headerCont" class="container">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">AdminPanel</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
@@ -33,10 +33,10 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="VendorModels" asp-action="Index">Продавцы</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="ProductModels" asp-action="Index">Товары не проверенные</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="ProductModels" asp-route-is_checked="true" asp-action="Index">Все товары</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="ProductModels" asp-action="IndexIsChecked">Товары проверенные</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="ProductModels"  asp-route-is_checked="false" asp-action="Index">Товары, ожидающие</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Logs">Логи</a>

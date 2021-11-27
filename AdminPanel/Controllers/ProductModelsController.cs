@@ -21,13 +21,20 @@ namespace AdminPanel.Controllers
         }
 
         // GET: ClientModels
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(bool is_checked)
         {
-            var onlineShopContext = _context.products.Where(p => p.is_checked == false).Include(c => c.vendor);
+            var onlineShopContext =  _context.products.Where(p => p.is_checked == is_checked).Include(c => c.vendor);
+               
             return View(await onlineShopContext.ToListAsync());
         }
 
-        public async Task<IActionResult> IndexIsChecked()
+        public async Task<IActionResult> IndexAwaitsModifier()
+        {
+            var onlineShopContext = _context.products.Where(p => p.is_checked).Include(c => c.vendor);
+            return View(await onlineShopContext.ToListAsync());
+        }
+
+        public async Task<IActionResult> IndexAwaitsAdding()
         {
             var onlineShopContext = _context.products.Where(p => p.is_checked).Include(c => c.vendor);
             return View(await onlineShopContext.ToListAsync());

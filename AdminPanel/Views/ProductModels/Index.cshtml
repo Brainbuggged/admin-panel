@@ -18,7 +18,6 @@
             </th>
             <th>
                 <p>Название</p>
-
                 @Html.DisplayNameFor(model => model.name)л
             </th>
             <th>
@@ -27,7 +26,6 @@
             </th>
             <th>
                 <p>Город</p>
-
                 @*@Html.DisplayNameFor(model => model.city)*@
             </th>
             <th>
@@ -36,17 +34,14 @@
             </th>
             <th>
                 <p>Тип</p>
-
                 @*@Html.DisplayNameFor(model => model.type)*@
             </th>
             <th>
                 <p>Цена</p>
-
                 @*@Html.DisplayNameFor(model => model.prise)*@
             </th>
             <th>
                 <p>Остаток</p>
-
                 @*@Html.DisplayNameFor(model => model.count)*@
             </th>
             <th>
@@ -58,7 +53,9 @@
                 <p>Статус</p>
                 @*@Html.DisplayNameFor(model => model.status)*@
             </th>
-       
+            <th>
+                <p>Действия</p>
+            </th>
         </tr>
     </thead>
     <tbody>
@@ -96,11 +93,11 @@
             <td>
                 @Html.DisplayFor(modelItem => item.status)
             </td>
-            @*<td>
-            <a asp-action="Edit" asp-route-id="@item.id">Edit</a> |
-            <a asp-action="Details" asp-route-id="@item.id">Details</a> |
-            <a asp-action="Delete" asp-route-id="@item.id">Delete</a>
-        </td>*@
+            <td>
+            <a asp-action="Edit" asp-route-id="@item.id">Изменить</a> |
+            <a asp-action="Details" asp-route-id="@item.id">Детали</a> |
+            <a asp-action="Delete" asp-route-id="@item.id">Удалить</a>
+        </td>
         </tr>
         }
     </tbody>
