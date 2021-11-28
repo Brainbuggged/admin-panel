@@ -14,21 +14,6 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="id" />
             <div class="form-group">
-                <label asp-for="number" class="control-label"></label>
-                <input asp-for="number" class="form-control" />
-                <span asp-validation-for="number" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="publication_date" class="control-label"></label>
-                <input asp-for="publication_date" class="form-control" />
-                <span asp-validation-for="publication_date" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="name" class="control-label"></label>
-                <input asp-for="name" class="form-control" />
-                <span asp-validation-for="name" class="text-danger"></span>
-            </div>
-            <div class="form-group">
                 <label asp-for="country" class="control-label"></label>
                 <input asp-for="country" class="form-control" />
                 <span asp-validation-for="country" class="text-danger"></span>
@@ -47,11 +32,6 @@
                 <label asp-for="type" class="control-label"></label>
                 <select asp-for="type" class="form-control"></select>
                 <span asp-validation-for="type" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="brand" class="control-label"></label>
-                <input asp-for="brand" class="form-control" />
-                <span asp-validation-for="brand" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="prise" class="control-label"></label>
@@ -77,11 +57,6 @@
                 <label asp-for="address" class="control-label"></label>
                 <input asp-for="address" class="form-control" />
                 <span asp-validation-for="address" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="rating" class="control-label"></label>
-                <input asp-for="rating" class="form-control" />
-                <span asp-validation-for="rating" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="status" class="control-label"></label>
@@ -117,11 +92,6 @@
                 <label asp-for="last_status_update" class="control-label"></label>
                 <input asp-for="last_status_update" class="form-control" />
                 <span asp-validation-for="last_status_update" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="categoryid" class="control-label"></label>
-                <select asp-for="categoryid" class="form-control" asp-items="ViewBag.categoryid"></select>
-                <span asp-validation-for="categoryid" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="vendorid" class="control-label"></label>

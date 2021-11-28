@@ -40,10 +40,6 @@
                 <p>Фото</p>
                 @*@Html.DisplayNameFor(model => model.photo)*@
             </th>
-            <th>
-                <p>Продавец</p>
-                @*@Html.DisplayNameFor(model => model.vendor)*@
-            </th>
             <th></th>
         </tr>
     </thead>
@@ -66,16 +62,13 @@
                 @Html.DisplayFor(modelItem => item.email)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.role)
+                <p>@item.role.GetText()</p>
             </td>
             <td>
                 @{
                     var photoimage = item.photo;
                 }
                 <img src="https://drive.google.com/uc?export=view&id=@photoimage" width="100px" height="100px" />
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.vendor.id)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.id">Изменить</a> |

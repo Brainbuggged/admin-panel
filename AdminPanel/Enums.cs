@@ -29,7 +29,11 @@ namespace AdminPanel.Models
 		[Description("Покупатель")]
 		Client = 0,
 		[Description("Продавец")]
-		Seller = 1
+		Seller = 1,
+		[Description("Администратор")]
+		Admin = 2,
+		[Description("Заморожен")]
+		Blocked = 3
 	}
 	public enum LogType
 	{

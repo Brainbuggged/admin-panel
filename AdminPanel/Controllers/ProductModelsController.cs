@@ -23,7 +23,7 @@ namespace AdminPanel.Controllers
         // GET: ClientModels
         public async Task<IActionResult> Index(bool is_checked)
         {
-            var onlineShopContext =  _context.products.Where(p => p.is_checked == is_checked).Include(c => c.vendor);
+            var onlineShopContext =  _context.products.Where(p => p.is_checked == is_checked).Include(c => c.vendor).Include(c => c.category);
                
             return View(await onlineShopContext.ToListAsync());
         }
