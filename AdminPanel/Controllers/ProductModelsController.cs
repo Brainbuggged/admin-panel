@@ -102,6 +102,41 @@ namespace AdminPanel.Controllers
             return View(productModel);
         }
 
+        public async Task<IActionResult> Decline(Guid? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var productModel = await _context.products.FindAsync(id);
+            if (productModel == null)
+            {
+                return NotFound();
+            }
+            productModel.status = Models.ProductStatus.Archive;
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Index));
+        }
+        public async Task<IActionResult> Approve(Guid? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var productModel = await _context.products.FindAsync(id);
+            if (productModel == null)
+            {
+                return NotFound();
+            }
+            productModel.status = Models.ProductStatus.Vistavlen;
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Index));
+        }
+
         // POST: ClientModels/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.

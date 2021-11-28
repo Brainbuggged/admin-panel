@@ -94,10 +94,10 @@
                 @Html.DisplayFor(modelItem => item.status)
             </td>
             <td>
-            <a asp-action="Edit" asp-route-id="@item.id">Изменить</a> |
-            <a asp-action="Details" asp-route-id="@item.id">Детали</a> |
-            <a asp-action="Delete" asp-route-id="@item.id">Удалить</a>
-        </td>
+                <a asp-action="Edit" asp-route-id="@item.id">Изменить</a> |
+                <a asp-action="Approve" asp-route-id="@item.id">Одобрить</a>
+                <a asp-action="Decline" asp-route-id="@item.id">Отклонить</a>
+            </td>
         </tr>
         }
     </tbody>

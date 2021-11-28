@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="~/DataTables/datatables.min.css">
 </head>
 <body>
-    <header style="background-color:blue;">
+    <header>
         <nav  class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div id="headerCont" class="container">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">AdminPanel</a>
@@ -36,7 +36,7 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="ProductModels" asp-route-is_checked="true" asp-action="Index">Все товары</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="ProductModels"  asp-route-is_checked="false" asp-action="Index">Товары, ожидающие</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="ProductModels"  asp-route-is_checked="false" asp-action="Index">Товары, ожидающие модерации</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Logs">Логи</a>
