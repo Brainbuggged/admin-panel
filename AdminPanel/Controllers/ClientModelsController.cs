@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using AdminPanel.DataAccessLayer;
 using AdminPanel.Models.Models.NSI_Client;
+using AdminPanel.Models;
 
 namespace AdminPanel.Controllers
 {
@@ -83,7 +84,15 @@ namespace AdminPanel.Controllers
             {
                 return NotFound();
             }
-            ViewData["vendorid"] = new SelectList(_context.vendors, "id", "id", clientModel.vendorid);
+            var dictionary = new Dictionary<string, string>();
+            var vendors  = new Dictionary<Guid, string>();
+            //foreach(var vendor in _context.vendors)
+            //{
+            //    vendors.Add(vendor.id, vendor.surname);
+            //}
+
+            ViewData["vendorid"] = new SelectList(_context.vendors, "id", "surname", clientModel.vendorid);
+
             return View(clientModel);
         }
 

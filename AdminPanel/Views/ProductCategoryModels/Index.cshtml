@@ -43,7 +43,15 @@
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.parentid)
+                    
+                    @{
+                        var text = string.Empty;
+                        if (item.parentid != null && item.parentid != string.Empty)
+                        {
+                            text = Model.Where(x => x.id.ToString() == item.parentid).FirstOrDefault().ru_name;
+                        }
+                    }
+                    <p>@text</p>
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.ru_name)

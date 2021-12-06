@@ -47,6 +47,8 @@ namespace AdminPanel.Controllers
         // GET: ProductCategoryModels/Create
         public IActionResult Create()
         {
+            ViewData["parentid"] = new SelectList(_context.product_categories.Where(x => x.parentid != null && x.parentid != string.Empty), "id", "ru_name");
+
             return View();
         }
 
@@ -64,6 +66,7 @@ namespace AdminPanel.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+
             return View(productCategoryModel);
         }
 
@@ -80,6 +83,8 @@ namespace AdminPanel.Controllers
             {
                 return NotFound();
             }
+            ViewData["parentid"] = new SelectList(_context.product_categories.Where(x => x.parentid != null && x.parentid != string.Empty), "id", "ru_name", productCategoryModel.parentid);
+
             return View(productCategoryModel);
         }
 
