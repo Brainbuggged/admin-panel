@@ -46,7 +46,6 @@
             <th>
                 @Html.DisplayNameFor(model => model.orders.First().total_prise)
             </th>
-            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -93,11 +92,6 @@
                 }
                     @*@Html.DisplayFor(modelItem => item.orders.Where(o => o.vendorid == item.id).Sum( x => x.total_prise))*@
                 <p> @totalPrice</p>
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.id">Изменить</a>
-                <a asp-action="Block" asp-route-id="@item.id">Заморозить</a>
-                <a asp-action="UnBlock" asp-route-id="@item.id">Разморозить</a>
             </td>
         </tr>
         }
