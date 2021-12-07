@@ -9,7 +9,7 @@ namespace AdminPanel.DataAccessLayer
 {
     public class OnlineShopContext : DbContext
     {
-        public OnlineShopContext(DbContextOptions options) : base(options) { }
+        public OnlineShopContext(DbContextOptions<OnlineShopContext> options) : base(options) { }
         public DbSet<CartItemModel> CartItemModels { get; set; }
 
         protected override void OnModelCreating(ModelBuilder _modelBuilder)

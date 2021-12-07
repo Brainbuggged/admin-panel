@@ -11,12 +11,7 @@ namespace AdminPanel.DataAccessLayer
 	{
 		public ParDBContext(DbContextOptions<ParDBContext> options) : base(options)
 		{
-			Database.EnsureCreated();
-			try
-			{
-				Database.Migrate();
-			}
-			catch { }
+			
 		}
 
 		public DbSet<CategoryModel> categories { get; set; }

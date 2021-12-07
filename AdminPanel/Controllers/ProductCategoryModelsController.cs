@@ -7,16 +7,19 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using AdminPanel.DataAccessLayer;
 using AdminPanel.Models.Models.NSI_Product;
+using AdminPanel.Models.Models.Par_Models;
 
 namespace AdminPanel.Controllers
 {
     public class ProductCategoryModelsController : Controller
     {
         private readonly OnlineShopContext _context;
+        private readonly ParDBContext _parcontext;
 
-        public ProductCategoryModelsController(OnlineShopContext context)
+        public ProductCategoryModelsController(OnlineShopContext context, ParDBContext parContext)
         {
             _context = context;
+            _parcontext = parContext;
         }
 
         // GET: ProductCategoryModels
@@ -44,10 +47,20 @@ namespace AdminPanel.Controllers
             return View(productCategoryModel);
         }
 
+        // GET: ProductCategoryModels/AddCategory
+        public IActionResult AddCategory(Guid? id)
+        {
+            //var parentList = _context.product_categories.Where(x => x.id == id);
+            //ViewData["parentid"] = new SelectList(parentList, "id", "ru_name");
+            return View();
+        }
+      
         // GET: ProductCategoryModels/Create
         public IActionResult Create()
         {
-            ViewData["parentid"] = new SelectList(_context.product_categories.Where(x => x.parentid != null && x.parentid != string.Empty), "id", "ru_name");
+            var parentList = _context.product_categories.Where(x => x.parentid != null && x.parentid != string.Empty).ToList();
+            parentList.Add(new ProductCategoryModel() { id = Guid.Empty});
+            ViewData["parentid"] = new SelectList(parentList, "id", "ru_name");
 
             return View();
         }
@@ -59,11 +72,26 @@ namespace AdminPanel.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("id,parentid,ru_name,en_name,is_last,photo")] ProductCategoryModel productCategoryModel)
         {
+            if (Guid.Parse(productCategoryModel.parentid) == Guid.Empty)
+            {
+                productCategoryModel.parentid = string.Empty;
+            }
+            if (productCategoryModel.is_last == null)
+            {
+                productCategoryModel.is_last = false;
+            }
             if (ModelState.IsValid)
             {
                 productCategoryModel.id = Guid.NewGuid();
                 _context.Add(productCategoryModel);
+
+                CategoryModel catModel = new CategoryModel() { id = productCategoryModel.id, en_name = productCategoryModel.en_name, name = productCategoryModel.ru_name };
+
+                _parcontext.Add(catModel);
+
                 await _context.SaveChangesAsync();
+                await _parcontext.SaveChangesAsync();
+
                 return RedirectToAction(nameof(Index));
             }
 
@@ -104,8 +132,13 @@ namespace AdminPanel.Controllers
             {
                 try
                 {
+                    CategoryModel catModel = new CategoryModel() { id = productCategoryModel.id, en_name = productCategoryModel.en_name, name = productCategoryModel.ru_name };
+
                     _context.Update(productCategoryModel);
                     await _context.SaveChangesAsync();
+
+                    _parcontext.Update(catModel);
+                    await _parcontext.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -149,6 +182,11 @@ namespace AdminPanel.Controllers
             var productCategoryModel = await _context.product_categories.FindAsync(id);
             _context.product_categories.Remove(productCategoryModel);
             await _context.SaveChangesAsync();
+
+            var catModel = await _parcontext.categories.FindAsync(id);
+            _parcontext.categories.Remove(catModel);
+            await _parcontext.SaveChangesAsync();
+
             return RedirectToAction(nameof(Index));
         }
 

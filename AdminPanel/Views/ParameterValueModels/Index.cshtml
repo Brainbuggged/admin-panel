@@ -1,0 +1,46 @@
+﻿@model IEnumerable<AdminPanel.Models.Models.Par_Models.ParameterValueModel>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Значения параметров</h1>
+
+<p>
+    <a asp-action="Create">Создать новый</a>
+</p>
+<table class="table" id="parameterValues">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.value)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.parameter)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.value)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.parameter.name)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.id">Изменить</a> |
+                <a asp-action="Delete" asp-route-id="@item.id">Удалить</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+<script>
+    $(document).ready(function () {
+        $('#parameterValues').DataTable();
+    });
+</script>
