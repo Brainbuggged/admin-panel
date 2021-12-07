@@ -4,64 +4,54 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Продавцы</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
+<table id="vendors" class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.surname)
+                <p>Фамилия</p>
+                @*@Html.DisplayNameFor(model => model.surname)*@
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.name)
+                <p>Имя</p>
+                @*@Html.DisplayNameFor(model => model.name)*@
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.patronymic)
+                <p>Отчество</p>
+                @*@Html.DisplayNameFor(model => model.patronymic)*@
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.phone)
+                <p>Телефон</p>
+                @*@Html.DisplayNameFor(model => model.phone)*@
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.email)
+                <p>Почта</p>
+                @*@Html.DisplayNameFor(model => model.email)*@
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.number)
+                <p>Фото</p>
+                @*@Html.DisplayNameFor(model => model.photo)*@
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.photo)
-            </th>
-
-
-            <th>
-                @Html.DisplayNameFor(model => model.work_phone)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.is_fiz_face)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.is_ur_face)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.rating)
+                <p>Рейтинг</p>
+                @*@Html.DisplayNameFor(model => model.photo)*@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.comment_count)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.is_assortment_updated)
+                @Html.DisplayNameFor(model => model.orders.First().position_count)
             </th>
-
             <th>
-                @Html.DisplayNameFor(model => model.last_assortiment_updated_date)
+                @Html.DisplayNameFor(model => model.orders.First().total_prise)
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+        @foreach (var item in Model)
+        {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.surname)
@@ -73,25 +63,16 @@
                 @Html.DisplayFor(modelItem => item.patronymic)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.photo)
+                @Html.DisplayFor(modelItem => item.phone)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.email)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.phone)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.number)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.work_phone)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.is_fiz_face)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.is_ur_face)
+                @{
+                    var photoimage = item.photo;
+                }
+                <img src="https://drive.google.com/uc?export=view&id=@photoimage" width="100px" height="100px" />
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.rating)
@@ -100,18 +81,31 @@
                 @Html.DisplayFor(modelItem => item.comment_count)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.is_assortment_updated)
+                @{ 
+                    var count = item.orders.Where(o => o.vendorid == item.id).Sum(x => x.position_count);
+                  }
+                @*@Html.DisplayFor(modelItem => item.orders.Where(o => o.vendorid == item.id).Sum( x=> x.position_count))*@
+                <p>@count</p>
             </td>
-
             <td>
-                @Html.DisplayFor(modelItem => item.last_assortiment_updated_date)
+                @{
+                    var totalPrice = item.orders.Where(o => o.vendorid == item.id).Sum(x => x.total_prise);
+                }
+                    @*@Html.DisplayFor(modelItem => item.orders.Where(o => o.vendorid == item.id).Sum( x => x.total_prise))*@
+                <p> @totalPrice</p>
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.id">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.id">Изменить</a>
+                <a asp-action="Block" asp-route-id="@item.id">Заморозить</a>
+                <a asp-action="UnBlock" asp-route-id="@item.id">Разморозить</a>
             </td>
         </tr>
-}
+        }
     </tbody>
 </table>
+
+<script>
+    $(document).ready(function () {
+        $('#vendors').DataTable();
+    });
+</script>

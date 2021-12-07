@@ -23,7 +23,7 @@ namespace AdminPanel.Controllers
         // GET: ProductCategoryModels
         public async Task<IActionResult> Index()
         {
-            return View(await _context.vendors.ToListAsync());
+            return View(await _context.vendors.Include(x=> x.orders).ToListAsync());
         }
 
         // GET: ProductCategoryModels/Details/5

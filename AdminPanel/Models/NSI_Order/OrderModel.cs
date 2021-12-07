@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using AdminPanel.Models.Models.NSI_Client;
 using AdminPanel.Models.Models.NSI_Vendor;
+using System.ComponentModel.DataAnnotations;
 
 namespace AdminPanel.Models.Models.NSI_Order
 {
@@ -15,8 +16,10 @@ namespace AdminPanel.Models.Models.NSI_Order
 
 		public double positions_prise { get; set; }
 		public double delivery_prise { get; set; }
-		public double total_prise { get; set; }
+		[Display(Name = "Общая выручка")]
 
+		public double total_prise { get; set; }
+		[Display(Name = "Количество проданных товаров")]
 		public int position_count { get; set; }
 
 		public double x { get; set; }
