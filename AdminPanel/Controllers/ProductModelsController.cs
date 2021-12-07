@@ -24,7 +24,7 @@ namespace AdminPanel.Controllers
         public async Task<IActionResult> Index(bool is_checked)
         {
             var onlineShopContext =  _context.products.Where(p => p.is_checked == is_checked).Include(c => c.vendor).Include(c => c.category);
-               
+            ViewData["awaiters"] = !is_checked;
             return View(await onlineShopContext.ToListAsync());
         }
 
@@ -115,6 +115,7 @@ namespace AdminPanel.Controllers
                 return NotFound();
             }
             productModel.status = Models.ProductStatus.Archive;
+            _context.Update(productModel);
             await _context.SaveChangesAsync();
 
             return RedirectToAction(nameof(Index));
@@ -132,6 +133,7 @@ namespace AdminPanel.Controllers
                 return NotFound();
             }
             productModel.status = Models.ProductStatus.Vistavlen;
+            _context.Update(productModel);
             await _context.SaveChangesAsync();
 
             return RedirectToAction(nameof(Index));

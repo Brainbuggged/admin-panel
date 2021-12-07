@@ -75,7 +75,6 @@
                 @Html.DisplayFor(modelItem => item.category.ru_name)
             </td>
             <td>
-                @*@Html.DisplayFor(modelItem => item.type)*@
                 @item.type.GetText()
             </td>
             <td>
@@ -89,12 +88,17 @@
             </td>
            
             <td>
-                @*@Html.DisplayFor(modelItem => item.status)*@
-                @item.type.GetText()
-
+                @item.status.GetText()
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.id">Изменить</a> |
+                <a asp-action="Edit" asp-route-id="@item.id">Изменить</a> 
+                @{
+                    if ((bool)ViewData["awaiters"] == true)
+                    {
+                        <a asp-action="Approve" asp-route-id="@item.id">|Подтвердить |</a> ;
+                        <a asp-action="Decline" asp-route-id="@item.id">Отклонить </a> ;
+                    }
+                }
             </td>
         </tr>
         }
