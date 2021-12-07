@@ -38,7 +38,7 @@ namespace AdminPanel.Models.Models.NSI_Client
 		[Display(Name = "Номер корзины")]
 
 		public string card_number { get; set; }
-		[Display(Name = "Дата создания картины")]
+		[Display(Name = "Дата создания корзины")]
 
 		public DateTime card_date { get; set; }
 		[Display(Name = "CVV")]

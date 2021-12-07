@@ -72,7 +72,7 @@ namespace AdminPanel.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("id,photo,number,name,surname,patronymic,phone,balance,card_number,card_date,cvv,login,password,email,role,vendorid")] ProductModel productModel)
+        public async Task<IActionResult> Create([Bind("id,country,city,release_year,type,prise,count,is_delivery_expected,description,address,status,is_pickuped,is_delivered,x,y")] ProductModel productModel)
         {
             if (ModelState.IsValid)
             {
@@ -144,7 +144,7 @@ namespace AdminPanel.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("id,photo,number,name,surname,patronymic,phone,balance,card_number,card_date,cvv,login,password,email,role,vendorid")] ProductModel productModel)
+        public async Task<IActionResult> Edit(Guid id, [Bind("id, country, city, release_year, type, prise, count, is_delivery_expected, description, address, status, is_pickuped, is_delivered, x, y")] ProductModel productModel)
         {
             if (id != productModel.id)
             {
@@ -155,7 +155,24 @@ namespace AdminPanel.Controllers
             {
                 try
                 {
-                    _context.products.Update(productModel);
+                    var product = _context.products.Where(x => x.id == productModel.id).First();
+
+                    product.country = productModel.country;
+                    product.city = productModel.city;
+                    product.release_year = productModel.release_year;
+                    product.type = productModel.type;
+                    product.prise = productModel.prise;
+                    product.count = productModel.count;
+                    product.is_delivery_expected = productModel.is_delivery_expected;
+                    product.description = productModel.description;
+                    product.address = productModel.address;
+                    product.status = productModel.status;
+                    product.is_pickuped = productModel.is_pickuped;
+                    product.is_delivered = productModel.is_delivered;
+                    product.x = productModel.x;
+                    product.y = productModel.y;
+
+                    _context.products.Update(product);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
