@@ -153,7 +153,7 @@ namespace AdminPanel.Controllers
             {
                 try
                 {
-                    _context.Update(productModel);
+                    _context.products.Update(productModel);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)

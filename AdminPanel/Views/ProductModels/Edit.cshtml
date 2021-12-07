@@ -30,7 +30,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="type" class="control-label"></label>
-                <select asp-for="type" class="form-control"></select>
+                <select asp-for="type"asp-items="Html.GetEnumSelectList<ProductType>()" class="form-control" ></select>
                 <span asp-validation-for="type" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -60,7 +60,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="status" class="control-label"></label>
-                <select asp-for="status" class="form-control"></select>
+                <select asp-for="status" asp-items="Html.GetEnumSelectList<ProductStatus>()"class="form-control"></select>
                 <span asp-validation-for="status" class="text-danger"></span>
             </div>
             <div class="form-group form-check">
@@ -83,23 +83,8 @@
                 <input asp-for="y" class="form-control" />
                 <span asp-validation-for="y" class="text-danger"></span>
             </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="is_checked" /> @Html.DisplayNameFor(model => model.is_checked)
-                </label>
-            </div>
             <div class="form-group">
-                <label asp-for="last_status_update" class="control-label"></label>
-                <input asp-for="last_status_update" class="form-control" />
-                <span asp-validation-for="last_status_update" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="vendorid" class="control-label"></label>
-                <select asp-for="vendorid" class="form-control" asp-items="ViewBag.vendorid"></select>
-                <span asp-validation-for="vendorid" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <input type="submit" value="Сохранить" class="btn btn-primary" />
             </div>
         </form>
     </div>
