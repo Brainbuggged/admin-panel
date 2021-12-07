@@ -23,7 +23,7 @@ namespace AdminPanel.Controllers
         // GET: CategoryModelsController
         public async Task<IActionResult> Index()
         {
-            return View(await _parcontext.parameter_values.Include(x => x.parameter).ToListAsync());
+            return View(await _parcontext.parameter_values.Include(x => x.parameter).ThenInclude(x => x.category).ToListAsync());
         }
 
         // GET: CategoryModelsController/Details/5
@@ -86,7 +86,7 @@ namespace AdminPanel.Controllers
             {
                 return NotFound();
             }
-            ViewData["parameterid"] = new SelectList(_parcontext.categories, "id", "name", parameterModel.parameter);
+            ViewData["parameterid"] = new SelectList(_parcontext.parameters, "id", "name", parameterModel.parameter);
 
             return View(parameterModel);
         }

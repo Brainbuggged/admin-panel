@@ -58,8 +58,9 @@ namespace AdminPanel.Controllers
         // GET: ProductCategoryModels/Create
         public IActionResult Create()
         {
-            var parentList = _context.product_categories.Where(x => x.parentid != null && x.parentid != string.Empty).ToList();
-            parentList.Add(new ProductCategoryModel() { id = Guid.Empty});
+            var parentList = new List<ProductCategoryModel>();
+            parentList.Add(new ProductCategoryModel() { id = Guid.Empty });
+            parentList.AddRange(_context.product_categories);
             ViewData["parentid"] = new SelectList(parentList, "id", "ru_name");
 
             return View();

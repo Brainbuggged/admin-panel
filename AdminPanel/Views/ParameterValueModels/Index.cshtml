@@ -16,6 +16,9 @@
                 @Html.DisplayNameFor(model => model.value)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.parameter.category)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.parameter)
             </th>
             <th></th>
@@ -28,11 +31,13 @@
                 @Html.DisplayFor(modelItem => item.value)
             </td>
             <td>
+                @Html.DisplayFor(modelItem => item.parameter.category.name)
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.parameter.name)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.id">Изменить</a> |
-                <a asp-action="Delete" asp-route-id="@item.id">Удалить</a>
             </td>
         </tr>
 }
