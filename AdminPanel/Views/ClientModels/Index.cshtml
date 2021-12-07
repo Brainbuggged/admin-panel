@@ -5,7 +5,9 @@
 }
 
 <h1>Клиенты</h1>
-
+<p>
+    <a asp-action="Create">Создать нового</a>
+</p>
 <table id="clients" class="table">
     <thead>
         <tr>
@@ -68,8 +70,9 @@
                 <img src="https://drive.google.com/uc?export=view&id=@photoimage" width="100px" height="100px" />
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.id">Изменить</a> |
-                <a asp-action="Delete" asp-route-id="@item.id">Удалить</a>
+                <a asp-action="Edit" asp-route-id="@item.id">Изменить</a>
+                <a asp-action="Block" asp-route-id="@item.id">Заморозить</a>
+                <a asp-action="UnBlock" asp-route-id="@item.id">Разморозить</a>
             </td>
         </tr>
 }

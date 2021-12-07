@@ -8,6 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using AdminPanel.DataAccessLayer;
 using AdminPanel.Models.Models.NSI_Client;
 using AdminPanel.Models;
+using AdminPanel.Extensions;
+using AdminPanel.Models.Models.NSI_Vendor;
 
 namespace AdminPanel.Controllers
 {
@@ -63,6 +65,12 @@ namespace AdminPanel.Controllers
             if (ModelState.IsValid)
             {
                 clientModel.id = Guid.NewGuid();
+                clientModel.role = RoleType.Client;
+                clientModel.vendor = null;
+                clientModel.balance = 0;
+                clientModel.number = new TranslitExtension().MakeName($"{clientModel.surname}{clientModel.name}{clientModel.patronymic}");
+                clientModel.password = new EncrypterExtension().Encrypt(clientModel.password);
+
                 _context.Add(clientModel);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -96,6 +104,63 @@ namespace AdminPanel.Controllers
             return View(clientModel);
         }
 
+
+        public async Task<IActionResult> Block(Guid? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var clientModel = await _context.clients.FindAsync(id);
+            clientModel.role = RoleType.Blocked;
+            _context.Update(clientModel);
+
+            var clientProducts = _context.products.Where(item => item.vendorid == clientModel.vendorid && item.status == ProductStatus.Vistavlen).ToList();
+
+            clientProducts.ForEach(item => { item.status = ProductStatus.Snyat; });
+
+            _context.products.UpdateRange(clientProducts);
+
+            await _context.SaveChangesAsync();
+            if (clientModel == null)
+            {
+                return NotFound();
+            }
+
+            return RedirectToAction(nameof(Index));
+        }
+
+
+        public async Task<IActionResult> UnBlock(Guid? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var clientModel = await _context.clients.FindAsync(id);
+            if (clientModel.vendor == null)
+            {
+                clientModel.role = RoleType.Client;
+            } 
+            else
+            {
+                clientModel.role = RoleType.Seller;
+
+            }
+
+            _context.Update(clientModel);
+
+            await _context.SaveChangesAsync();
+            if (clientModel == null)
+            {
+                return NotFound();
+            }
+
+            return RedirectToAction(nameof(Index));
+        }
+
         // POST: ClientModels/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -112,7 +177,83 @@ namespace AdminPanel.Controllers
             {
                 try
                 {
-                    _context.Update(clientModel);
+                    Randomer rnd = new Randomer();
+                    //берем сначал клиента
+                    var client = _context.clients.SingleOrDefault(item => item.id == clientModel.id);
+                    //потом немного апдейтим ДОПУСТИМЫЕ ПОЛЯ
+                    client.photo = clientModel.photo;
+                    client.phone = clientModel.phone;
+                    client.card_number = clientModel.card_number;
+                    client.card_date = clientModel.card_date;
+                    client.cvv = clientModel.cvv;
+                    client.login = clientModel.login;
+                    client.email = clientModel.email;
+                    //если роль не изменилась, то сохраняе
+                    if (client.role == clientModel.role)
+                        client.role = clientModel.role;
+                    //исли роль изменилась на продавца
+                    else if (clientModel.role == RoleType.Seller)
+                    {
+                        //если профиль продавца не был выбран
+                        if (clientModel.vendorid == null)
+                        {
+                            var vendorId = Guid.NewGuid();
+                            var vendor = new VendorModel
+                            {
+                                id = vendorId,
+                                rating = 0,
+                                phone = client.phone,
+                                surname = client.surname,
+                                name = client.name,
+                                patronymic = client.patronymic,
+                                is_fiz_face = false,
+                                is_ur_face = true,
+                                photo = client.photo,
+                                socials = rnd.RandomSocials(vendorId),
+                                is_assortment_updated = false,
+                                work_phone = client.phone,
+                                email = client.email,
+                            };
+                            _context.vendors.Add(vendor);
+                            client.vendorid = vendorId;
+                        }
+                        //если профиль продавца был выбран
+                        else
+                            client.vendorid = clientModel.vendorid;
+
+                        client.role = clientModel.role;
+                    }
+                    //если роль изменилась про покупателя\клиента
+                    else if (clientModel.role == RoleType.Client)
+                    {
+                        //удаляем товары товары продавца из корзин
+                        _context.cart_items.RemoveRange(_context.cart_items.Include(p => p.product).Where(item => item.product.vendorid == client.vendorid));
+                        //снимаем все товары продавца с продажи
+                        var clientProducts = _context.products.Where(item => item.vendorid == client.vendorid && item.status == ProductStatus.Vistavlen).ToList();
+                        clientProducts.ForEach(item => { item.status = ProductStatus.Snyat; });
+                        _context.products.UpdateRange(clientProducts);
+                        //забираем профиль продавца
+                        client.vendorid = null;
+                        client.role = clientModel.role;
+                    }
+                    //если изменили с роли продавец на заморожено
+                    else if (clientModel.role == RoleType.Blocked && client.role == RoleType.Seller)
+                    {
+                        //удаляем товары товары продавца из корзин
+                        _context.cart_items.RemoveRange(_context.cart_items.Include(p => p.product).Where(item => item.product.vendorid == client.vendorid));
+                        //снимаем все товары продавца с продажи
+                        var clientProducts = _context.products.Where(item => item.vendorid == client.vendorid && item.status == ProductStatus.Vistavlen).ToList();
+                        clientProducts.ForEach(item => { item.status = ProductStatus.Snyat; });
+                        _context.products.UpdateRange(clientProducts);
+
+                        client.role = clientModel.role;
+                    }
+                    //если изменили с роли клиент\покупатель на роль заморожено
+                    else if (clientModel.role == RoleType.Blocked && client.role == RoleType.Client)
+                        client.role = clientModel.role;
+                    //апдейтим клиента
+                    _context.clients.Update(client);
+
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
