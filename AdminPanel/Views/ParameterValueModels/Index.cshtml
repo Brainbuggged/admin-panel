@@ -9,7 +9,7 @@
 <p>
     <a asp-action="Create">Создать новый</a>
 </p>
-<table class="table" id="parameterValues">
+<table  id="parameterValues" class="display" style="width:100%">
     <thead>
         <tr>
             <th>
@@ -37,7 +37,7 @@
                 @Html.DisplayFor(modelItem => item.parameter.name)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.id">Изменить</a> |
+                <a asp-action="Edit" asp-route-id="@item.id">Изменить</a> 
             </td>
         </tr>
 }
@@ -46,6 +46,8 @@
 
 <script>
     $(document).ready(function () {
-        $('#parameterValues').DataTable();
+        $('#parameterValues').DataTable({
+            "language": jsonLanguageDataTable
+        });
     });
 </script>

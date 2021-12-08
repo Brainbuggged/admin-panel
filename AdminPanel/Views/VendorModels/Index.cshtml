@@ -6,7 +6,7 @@
 
 <h1>Продавцы</h1>
 
-<table id="vendors" class="table">
+<table id="vendors" class="display" style="width:100%">
     <thead>
         <tr>
             <th>
@@ -100,6 +100,8 @@
 
 <script>
     $(document).ready(function () {
-        $('#vendors').DataTable();
+        $('#vendors').DataTable({
+            "language": jsonLanguageDataTable
+        });
     });
 </script>

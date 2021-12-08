@@ -14,8 +14,8 @@
                 @*@Html.DisplayNameFor(model => model.publication_date)*@
             </th>
             <th>
-                <p>Название</p>
-                @Html.DisplayNameFor(model => model.name)л
+                @*<p>Название</p>*@
+                @Html.DisplayNameFor(model => model.name)
             </th>
             <th>
                 <p>Страна</p>
@@ -95,7 +95,7 @@
                 @{
                     if ((bool)ViewData["awaiters"] == true)
                     {
-                        <a asp-action="Approve" asp-route-id="@item.id">|Подтвердить |</a> ;
+                        <a asp-action="Approve" asp-route-id="@item.id">Подтвердить</a> ;
                         <a asp-action="Decline" asp-route-id="@item.id">Отклонить </a> ;
                     }
                 }
@@ -107,6 +107,8 @@
 
 <script>
     $(document).ready(function () {
-        $('#products').DataTable();
+        $('#products').DataTable({
+            "language": jsonLanguageDataTable
+        });
     });
 </script>

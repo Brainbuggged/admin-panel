@@ -6,7 +6,7 @@
 
 <h1>Логи</h1>
 
-<table id="logs" class="table">
+<table id="logs" class="display" style="width:100%">
     <thead>
         <tr>
             <th>
@@ -80,6 +80,8 @@
 
 <script>
     $(document).ready(function () {
-        $('#logs').DataTable();
+        $('#logs').DataTable({
+            "language": jsonLanguageDataTable
+        });
     });
 </script>

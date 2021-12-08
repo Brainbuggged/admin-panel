@@ -9,7 +9,7 @@
 <p>
     <a asp-action="Create">Создать новый</a>
 </p>
-<table class="table" id="parameters">
+<table id="parameters" class="display" style="width:100%">
     <thead>
         <tr>
             <th>
@@ -39,6 +39,8 @@
 </table>
 <script>
     $(document).ready(function () {
-        $('#parameters').DataTable();
+        $('#parameters').DataTable({
+            "language": jsonLanguageDataTable
+        });
     });
 </script>

@@ -8,7 +8,7 @@
 <p>
     <a asp-action="Create">Создать нового</a>
 </p>
-<table id="clients" class="table">
+<table id="clients" class="display" style="width:100%">
     <thead>
         <tr>
             <th>
@@ -80,6 +80,8 @@
 </table>
 <script>
     $(document).ready(function () {
-        $('#clients').DataTable();
+        $('#clients').DataTable({
+            "language": jsonLanguageDataTable
+        });
     });
 </script>
