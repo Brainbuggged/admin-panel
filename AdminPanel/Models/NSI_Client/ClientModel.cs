@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using AdminPanel.Models.Models.NSI_Order;
 using AdminPanel.Models.Models.NSI_Product;
 using AdminPanel.Models.Models.NSI_Vendor;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 
 namespace AdminPanel.Models.Models.NSI_Client
@@ -41,7 +42,7 @@ namespace AdminPanel.Models.Models.NSI_Client
 		[Display(Name = "Дата создания корзины")]
 
 		public DateTime card_date { get; set; }
-		[Display(Name = "CVV")]
+		[Display(Name = "Банковская карта")]
 
 		public string cvv { get; set; }
 		[Display(Name = "Логин")]
@@ -56,8 +57,7 @@ namespace AdminPanel.Models.Models.NSI_Client
 
 		[Display(Name = "Роль")]
 		public RoleType role { get; set; }
-
-
+				
 		[Display(Name = "Продавец")]
 		public Guid? vendorid { get; set; }
 		public VendorModel vendor { get; set; }

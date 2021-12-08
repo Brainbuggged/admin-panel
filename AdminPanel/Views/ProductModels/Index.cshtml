@@ -63,7 +63,10 @@
                 @Html.DisplayFor(modelItem => item.publication_date)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.name)
+                @{ 
+                    var reference = "http://budevice.ru/product/" + @Html.DisplayFor(modelItem => item.number);
+                }
+                <a href="@reference">@Html.DisplayFor(modelItem => item.name)</a>  
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.country)

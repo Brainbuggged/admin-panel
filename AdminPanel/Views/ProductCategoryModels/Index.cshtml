@@ -54,7 +54,10 @@
                     <p>@text</p>
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.ru_name)
+                    @{
+                        var reference = "  http://budevice.ru/catalog/" + @Html.DisplayFor(modelItem => item.en_name);
+                    }
+                    <a href="@reference">@Html.DisplayFor(modelItem => item.ru_name)</a>
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.en_name)

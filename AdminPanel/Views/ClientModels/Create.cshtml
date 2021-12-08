@@ -1,4 +1,4 @@
-﻿@model AdminPanel.Models.Models.NSI_Client.ClientModel
+﻿@model AdminPanel.Models.Models.NSI_Client.ClientViewModel
 
 @{
     ViewData["Title"] = "Create";
@@ -10,7 +10,7 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create">
+        <form  enctype="multipart/form-data" asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="surname" class="control-label"></label>
@@ -33,22 +33,28 @@
                 <span asp-validation-for="login" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <input asp-for="Image" type="file" class="custom-file-input fileUpload" />
+                <input type="file" name="Image" multiple accept="image/*,image/jpeg">
+                <label>Выбрать файл</label>
+            </div>
+
+            <div class="form-group">
                 <label asp-for="password" class="control-label"></label>
                 <input asp-for="password" class="form-control" />
                 <span asp-validation-for="password" class="text-danger"></span>
             </div>
             @*<div class="form-group">
-                <label asp-for="role" class="control-label"></label>
-                <select asp-for="role" class="form-control"></select>
-                <span asp-validation-for="role" class="text-danger"></span>
-            </div>*@
+            <label asp-for="role" class="control-label"></label>
+            <select asp-for="role" class="form-control"></select>
+            <span asp-validation-for="role" class="text-danger"></span>
+        </div>*@
             @*<div class="form-group">
-                <label asp-for="vendorid" class="control-label"></label>
-                <select asp-for="vendorid" class="form-control" asp-items="ViewBag.vendorid"></select>
-            </div>*@
+            <label asp-for="vendorid" class="control-label"></label>
+            <select asp-for="vendorid" class="form-control" asp-items="ViewBag.vendorid"></select>
+        </div>*@
             <div class="form-group">
                 <label asp-for="photo" class="control-label"></label>
-                <input asp-for="photo" class="form-control" />
+                <input type="file" name="photo" multiple accept="image/*,image/jpeg">
                 <span asp-validation-for="photo" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -57,10 +63,10 @@
                 <span asp-validation-for="email" class="text-danger"></span>
             </div>
             @*<div class="form-group">
-                <label asp-for="balance" class="control-label"></label>
-                <input asp-for="balance" class="form-control" />
-                <span asp-validation-for="balance" class="text-danger"></span>
-            </div>*@
+            <label asp-for="balance" class="control-label"></label>
+            <input asp-for="balance" class="form-control" />
+            <span asp-validation-for="balance" class="text-danger"></span>
+        </div>*@
             <div class="form-group">
                 <label asp-for="card_date" class="control-label"></label>
                 <input asp-for="card_date" class="form-control" />
@@ -82,20 +88,21 @@
                 <span asp-validation-for="phone" class="text-danger"></span>
             </div>
             @*<div class="form-group">
-                <label asp-for="number" class="control-label"></label>
-                <input asp-for="number" class="form-control" />
-                <span asp-validation-for="number" class="text-danger"></span>
-            </div>*@
+            <label asp-for="number" class="control-label"></label>
+            <input asp-for="number" class="form-control" />
+            <span asp-validation-for="number" class="text-danger"></span>
+        </div>*@
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Создать" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Назад</a>
 </div>
+
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

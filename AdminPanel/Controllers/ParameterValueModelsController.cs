@@ -48,8 +48,11 @@ namespace AdminPanel.Controllers
         public IActionResult Create()
         {
             var parameterList = _parcontext.parameters.ToList();
-          
             ViewData["parameterid"] = new SelectList(parameterList, "id", "name");
+
+            var categoryList = _parcontext.categories.ToList();
+            ViewData["categoryid"] = new SelectList(categoryList, "id", "name");
+
             return View();
         }
 
@@ -72,6 +75,24 @@ namespace AdminPanel.Controllers
                 return View();
             }
         }
+
+        [HttpGet]
+        public JsonResult GetParameter(Guid id)
+        {
+            List<SelectListItem> list = new List<SelectListItem>();
+
+            //ProdCatItems
+            var items = _parcontext.parameters.ToList().Where(p => p.categoryid == id);
+
+
+            foreach (var item in items)
+            {
+                list.Add(new SelectListItem { Value = item.id.ToString(), Text = item.name });
+            }
+
+            return Json(list);
+        }
+
 
         // GET: CategoryModelsController/Edit/5
         public async Task<IActionResult> Edit(Guid? id)

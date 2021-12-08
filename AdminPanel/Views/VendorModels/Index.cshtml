@@ -53,7 +53,10 @@
         {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.surname)
+                @{
+                    var reference = "http://budevice.ru/vendor/" + @Html.DisplayFor(modelItem => item.number);
+                }
+                <a href="@reference">@Html.DisplayFor(modelItem => item.surname)</a>
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.name)
@@ -91,7 +94,7 @@
                     var totalPrice = item.orders.Where(o => o.vendorid == item.id).Sum(x => x.total_prise);
                 }
                     @*@Html.DisplayFor(modelItem => item.orders.Where(o => o.vendorid == item.id).Sum( x => x.total_prise))*@
-                <p> @totalPrice</p>
+                <p> @Math.Round(totalPrice,2) руб</p>
             </td>
         </tr>
         }

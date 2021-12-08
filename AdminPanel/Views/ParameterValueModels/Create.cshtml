@@ -13,14 +13,19 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
+                <label asp-for="parameter.categoryid" class="control-label"></label>
+                <select asp-for="parameter.categoryid" class="form-control" asp-items="ViewBag.categoryid"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="parameterid" class="control-label">Параметр</label>
+                <select asp-for="parameterid" class="form-control" asp-items="ViewBag.parameterid"></select>
+            </div>
+            <div class="form-group">
                 <label asp-for="value" class="control-label"></label>
                 <input asp-for="value" class="form-control" />
                 <span asp-validation-for="value" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="parameterid" class="control-label">Параметр</label>
-                <select asp-for="parameterid" class ="form-control" asp-items="ViewBag.parameterid"></select>
-            </div>
+
             <div class="form-group">
                 <input type="submit" value="Создать" class="btn btn-primary" />
             </div>
@@ -31,7 +36,35 @@
 <div>
     <a asp-action="Index">Назад</a>
 </div>
+<script>
+    $('#parameter_categoryid').on('change', '', function (e) {
+        fillDropDownList();
+    });
+    document.addEventListener("DOMContentLoaded", function (event) {
+        fillDropDownList();
+    });
 
+     function fillDropDownList() {
+        $('#parameterid').prop("disabled", false);
+        $('#parameterid').empty();
+        var selectedValue = $('#parameter_categoryid').val();
+        $.ajax({
+            type: "GET",
+            url: '@Url.Action("GetParameter","ParameterValueModels")',
+            data: { id: selectedValue },
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                for (var i = 0; i < data.length; i++) {
+                    $('#parameterid').append('<option value="'+data[i].value+'" selected="selected">'+data[i].text+'</option>');
+                }
+            },
+            error: function (er) {
+                alert("An error occured");
+            }
+        });
+    }
+</script>
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

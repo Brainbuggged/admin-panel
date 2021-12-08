@@ -10,6 +10,12 @@ using AdminPanel.Models.Models.NSI_Client;
 using AdminPanel.Models;
 using AdminPanel.Extensions;
 using AdminPanel.Models.Models.NSI_Vendor;
+using Microsoft.AspNetCore.Http;
+using System.Web;
+using System.Net.Http;
+using System.Net;
+using System.Text;
+using System.IO;
 
 namespace AdminPanel.Controllers
 {
@@ -51,17 +57,22 @@ namespace AdminPanel.Controllers
         // GET: ClientModels/Create
         public IActionResult Create()
         {
-            ViewData["vendorid"] = new SelectList(_context.vendors, "id", "id");
+            var vendorsList = new List<VendorModel>();
+            vendorsList.Add(new VendorModel() { id = Guid.Empty });
+            vendorsList.AddRange(_context.vendors);
+            ViewData["vendorid"] = new SelectList(vendorsList, "id", "id");
             return View();
         }
 
+       
         // POST: ClientModels/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("id,photo,number,name,surname,patronymic,phone,balance,card_number,card_date,cvv,login,password,email,role,vendorid")] ClientModel clientModel)
+        public async Task<IActionResult> Create([Bind("id,photo,number,name,surname,patronymic,phone,balance,card_number,card_date,cvv,login,password,email,role,vendorid,Image")] ClientViewModel clientModel)
         {
+            //TODO: Photo upload
             if (ModelState.IsValid)
             {
                 clientModel.id = Guid.NewGuid();
@@ -70,6 +81,33 @@ namespace AdminPanel.Controllers
                 clientModel.balance = 0;
                 clientModel.number = new TranslitExtension().MakeName($"{clientModel.surname}{clientModel.name}{clientModel.patronymic}");
                 clientModel.password = new EncrypterExtension().Encrypt(clientModel.password);
+
+                string url = "http://77.73.67.101:93/api/Upload/upload-profile-photo";
+                var request = (HttpWebRequest)WebRequest.Create(url);
+
+                if (clientModel.Image.Length > 0)
+                {
+                    using (var ms = new MemoryStream())
+                    {
+                        clientModel.Image.CopyTo(ms);
+                        var fileBytes = ms.ToArray();
+                        string s = Convert.ToBase64String(fileBytes);
+                        // act on the Base64 data
+                        var postData = clientModel.Image;
+                        var data = fileBytes;
+
+                        request.Method = "POST";
+                        request.ContentType = "image";
+
+                        using (var stream = request.GetRequestStream())
+                        {
+                            stream.Write(data, 0, data.Length);
+                        }
+                    }
+                }
+
+
+                var response = (HttpWebResponse)request.GetResponse();
 
                 _context.Add(clientModel);
                 await _context.SaveChangesAsync();
@@ -98,8 +136,10 @@ namespace AdminPanel.Controllers
             //{
             //    vendors.Add(vendor.id, vendor.surname);
             //}
-
-            ViewData["vendorid"] = new SelectList(_context.vendors, "id", "surname", clientModel.vendorid);
+            var vendorsList = new List<VendorModel>();
+            vendorsList.Add(new VendorModel() { id = Guid.Empty });
+            vendorsList.AddRange(_context.vendors);
+            ViewData["vendorid"] = new SelectList(vendorsList, "id", "surname", clientModel.vendorid);
 
             return View(clientModel);
         }
@@ -195,7 +235,7 @@ namespace AdminPanel.Controllers
                     else if (clientModel.role == RoleType.Seller)
                     {
                         //если профиль продавца не был выбран
-                        if (clientModel.vendorid == null)
+                        if (clientModel.vendorid == Guid.Empty || clientModel.vendorid == null)
                         {
                             var vendorId = Guid.NewGuid();
                             var vendor = new VendorModel
