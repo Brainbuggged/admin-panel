@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="~/css/site.css" />
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/js/jsonDataTable.js"></script>
+    <script src="~/js/createDataTables.js"></script>
     <script src="~/DataTables/datatables.min.js"></script>
     <script src="~/DataTables/DataTables-1.11.3/js/jquery.dataTables.min.js"></script>
     <link rel="stylesheet" href="~/DataTables/datatables.min.css">
@@ -18,46 +19,6 @@
     <link rel="stylesheet" href="~/assets/css/style.css">
     <link rel="stylesheet" href="~/assets/css/responsive.css">
 </head>
-
-    @*<header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div id="headerCont" class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"></a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="ProductCategoryModels" asp-action="Index">Категории товаров</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="ParameterModels" asp-action="Index">Параметры категорий</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="ParameterValueModels" asp-action="Index">Значения параметров</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="ClientModels" asp-action="Index">Клиенты</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="VendorModels" asp-action="Index">Продавцы</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="ProductModels" asp-route-is_checked="true" asp-action="Index">Все товары</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="ProductModels" asp-route-is_checked="false" asp-action="Index">Товары, ожидающие модерации</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Logs">Логи</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-    </header>*@
     <body>
         <div class="main-wrapper">
             <!-- --NAVBAR---- -->
@@ -247,6 +208,9 @@
                             </li>
                             <li>
                                 <a class="nav-link text-dark" asp-area="" asp-controller="ProductModels" asp-route-is_checked="true" asp-action="Index">Все товары</a>
+                            </li>
+                            <li>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="OrderModels" asp-action="Index">Заказы</a>
                             </li>
                             <li>
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Logs">Логи</a>

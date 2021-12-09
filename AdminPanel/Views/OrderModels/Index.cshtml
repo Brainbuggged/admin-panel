@@ -1,0 +1,184 @@
+﻿@model IEnumerable<AdminPanel.Models.Models.NSI_Order.OrderModel>
+
+@{
+    ViewData["Title"] = "OrderModels";
+}
+
+<h1>Заказы</h1>
+<table id="orders" class="display" style="width:100%;height:50%">
+    <thead>
+        <tr>
+            <td>
+                @Html.DisplayNameFor(model => model.id)
+            </td>
+            <th>
+                @Html.DisplayNameFor(model => model.number)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.position_count)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.positions_prise)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.delivery_prise)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.total_prise)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.date)
+            </th>
+            <th>
+
+                @Html.DisplayNameFor(model => model.status)
+            </th>
+            <th>
+                Продавец
+            </th>
+            <th>
+                Клиент
+            </th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.number)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.position_count)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.positions_prise)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.delivery_prise)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.total_prise)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.date)
+            </td>
+            <td>
+                @item.status.GetText()
+            </td>
+            <td>
+                @{
+                    var vendor = item.vendor.surname + item.vendor.name;
+                }
+                @vendor
+            </td>
+            <td>
+                @{
+                    var client = item.client.surname + item.client.name;
+                }
+                @client
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>
+<div id="divOrderProducts">
+    @*<p id="pTasks">@tasksTitle</p>*@
+    <table id="OrderModelProducts" class="cell-border">
+        <thead>
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.products.First().name)</th>
+                <th>@Html.DisplayNameFor(model => model.products.First().category_name)</th>
+                <th>@Html.DisplayNameFor(model => model.products.First().brand)</th>
+                <th>@Html.DisplayNameFor(model => model.products.First().prise)</th>
+                <th>@Html.DisplayNameFor(model => model.products.First().count)</th>
+                <th>@Html.DisplayNameFor(model => model.products.First().total_prise)</th>
+                <th>@Html.DisplayNameFor(model => model.products.First().photo)</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('#orders').DataTable({
+            "language": jsonLanguageDataTable,
+            "select": true
+        });
+        var $orderModelProducts = $('#OrderModelProducts tbody');
+        createDataTables(false, true, true, false);
+
+        var currentOrderModel;
+    //$(document).ready(function () {
+    //    var $orderProductModels = $('#OrderProductModels tbody');
+    //    var $inventoryCountTasks = $('#InventoryCount_Tasks tbody');
+
+    //    createDataTables(true, true, true, true);
+        var OrderModelProducts;
+        function getOrderProductModels(
+            link,
+            rowData,
+            destroyLines) {
+            ajaxRequestTasks = $.ajax({
+                type: "GET",
+                url: link,
+                data: { orderModelId: rowData },
+                dataType: 'json',
+                contentType: 'application/json; charset=utf-8',
+                success: function (data) {
+                    //InventoryCount_Tasks.destroy();
+                    $('#OrderModelProducts tbody').empty();
+
+                    orderProductModels = data;
+                    var html;
+                    for (var i = 0; i < orderProductModels.length; i++) {
+                        html += '<tr><td>' + orderProductModels[i].name + '</td>' +
+                            '<td>' + orderProductModels[i].category_name + '</td>' +
+                            '<td>' + orderProductModels[i].brand + '</td>' +
+                            '<td>' + orderProductModels[i].prise + '</td>' +
+                            '<td>' + orderProductModels[i].count + '</td>' +
+                            '<td>' + orderProductModels[i].total_prise + '</td>' +
+                            '<td>' + orderProductModels[i].photo + '</td>' +
+                            '</tr>';
+                    }
+
+                    $('#OrderModelProducts tbody').append(html);
+
+                    //$orderModelProducts.destroy();
+                    OrderModelProducts.destroy();
+                    $orderModelProducts.empty();
+
+                    //InventoryCount_Tasks.destroy();
+                    //$inventoryCountTasks.empty();
+
+                    createDataTables(false, true, true, false);
+                },
+                error: function (er) {
+                    if (er.statusText == 'abort') {
+                        return;
+                    }
+                    alert("An error occured");
+                }
+            });
+        }
+
+        $(document).on("click", "#orders tbody tr", function (e) {
+            var currentRow = this;
+            currentOrderModel = currentRow;
+            var modelRow = $('#orders').DataTable().row(currentRow).data();
+
+            getOrderProductModels(
+                '@Url.Action("GetOrderProductModels", "OrderModels")',
+                modelRow[0],
+                true
+            );
+        });
+    });
+    //}
+</script>

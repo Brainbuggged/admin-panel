@@ -10,11 +10,19 @@ namespace AdminPanel.Models.Models.NSI_Order
 	[Index("number")]
 	public class OrderModel
 	{
+		[Display(Name = "Идентификатор")]
+
 		public Guid id { get; set; }
+
+		[Display(Name = "Номер")]
 
 		public string number { get; set; }
 
+		[Display(Name = "Цена товара")]
+
 		public double positions_prise { get; set; }
+		[Display(Name = "Стоимость доставки")]
+
 		public double delivery_prise { get; set; }
 		[Display(Name = "Общая выручка")]
 
@@ -26,7 +34,11 @@ namespace AdminPanel.Models.Models.NSI_Order
 		public double y { get; set; }
 		public string address { get; set; }
 
+		[Display(Name = "Дата и время заказа")]
+
 		public DateTime date { get; set; }
+		[Display(Name = "Статус заказа")]
+
 		public OrderStatus status { get; set; }
 		public DeliveryType delivery_type { get; set; }
 		public PaymentType payment_type { get; set; }
