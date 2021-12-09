@@ -8,6 +8,13 @@ using Microsoft.EntityFrameworkCore;
 using AdminPanel.DataAccessLayer;
 using AdminPanel.Models.Models.NSI_Product;
 using AdminPanel.Models.Models.Par_Models;
+using AdminPanel.ViewModels.Category.CreateAdminCategory;
+using System.Net;
+using System.IO;
+using System.Text;
+using System.Net.Http;
+using AdminPanel.Services;
+using AdminPanel.Extensions;
 
 namespace AdminPanel.Controllers
 {
@@ -71,7 +78,7 @@ namespace AdminPanel.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("id,parentid,ru_name,en_name,is_last,photo")] ProductCategoryModel productCategoryModel)
+        public async Task<IActionResult> Create([Bind("id,parentid,ru_name,en_name,is_last,photo")] CreateAdminCategory productCategoryModel)
         {
             if (Guid.Parse(productCategoryModel.parentid) == Guid.Empty)
             {
@@ -79,14 +86,26 @@ namespace AdminPanel.Controllers
             }
             if (productCategoryModel.is_last == null)
             {
-                productCategoryModel.is_last = false;
+                productCategoryModel.is_last = true;
             }
             if (ModelState.IsValid)
             {
-                productCategoryModel.id = Guid.NewGuid();
-                _context.Add(productCategoryModel);
+                var photoLinq = await new UploadService().UploadPhoto("upload-category-photo", productCategoryModel.photo);
 
-                CategoryModel catModel = new CategoryModel() { id = productCategoryModel.id, en_name = productCategoryModel.en_name, name = productCategoryModel.ru_name };
+                productCategoryModel.id = Guid.NewGuid();
+
+                ProductCategoryModel prodCatModel = new ProductCategoryModel() 
+                { 
+                  id = productCategoryModel.id, 
+                  en_name = new TranslitExtension().Run(productCategoryModel.ru_name), 
+                  ru_name = productCategoryModel.ru_name,
+                  is_last = productCategoryModel.is_last,
+                  parentid = productCategoryModel.parentid,
+                  photo = photoLinq
+                };
+                _context.Add(prodCatModel);
+
+                CategoryModel catModel = new CategoryModel() { id = productCategoryModel.id, en_name = new TranslitExtension().Run(productCategoryModel.ru_name), name = productCategoryModel.ru_name };
 
                 _parcontext.Add(catModel);
 
