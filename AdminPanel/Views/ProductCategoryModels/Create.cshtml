@@ -1,4 +1,4 @@
-﻿@model AdminPanel.ViewModels.Category.CreateAdminCategory.CreateAdminCategory
+﻿@model AdminPanel.Models.Models.NSI_Product.ProductCategoryModel
 
 @{
     ViewData["Title"] = "Create";
@@ -24,7 +24,8 @@
             </div>
             <div class="form-group">
                 <label asp-for="photo" class="control-label"></label>
-                <input type="file" asp-for="photo" class="form-control">
+                <input type="file" id="upload">
+                <input asp-for="photo" type="text" class="form-control" readonly id="photo_linq" hidden/>
             </div>
             <div class="form-group">
                 <input type="submit" value="Создать" class="btn btn-primary" />
@@ -38,5 +39,34 @@
 </div>
 
 @section Scripts {
+    
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script type="text/javascript">
+       $(document).ready(function () {
+        $('#upload').change(function (e) {
+            var data = new FormData();
+
+            data.append("file", document.getElementById('upload').files[0]);
+
+            let header = new Headers({
+                'Access-Control-Allow-Origin':'*',
+                'Content-Type': 'multipart/form-data',
+                'accept': 'text/plain'
+            });
+
+            fetch('http://77.73.67.101:93/api/Upload/upload-category-photo', {
+              method: 'POST',
+              body: data,
+              mode: 'cors',
+              header: header,
+            }).then((response) => { 
+            return response.json().then((data) => {
+                document.getElementById('photo_linq').value = data.result.photo_linq;
+            }).catch((err) => {
+                console.log(err);
+            }) 
+        });
+        });
+    });
+    </script>
 }

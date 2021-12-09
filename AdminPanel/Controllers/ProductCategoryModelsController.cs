@@ -78,7 +78,7 @@ namespace AdminPanel.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("id,parentid,ru_name,en_name,is_last,photo")] CreateAdminCategory productCategoryModel)
+        public async Task<IActionResult> Create([Bind("id,parentid,ru_name,en_name,is_last,photo")] ProductCategoryModel productCategoryModel)
         {
             if (Guid.Parse(productCategoryModel.parentid) == Guid.Empty)
             {
@@ -90,20 +90,9 @@ namespace AdminPanel.Controllers
             }
             if (ModelState.IsValid)
             {
-                var photoLinq = await new UploadService().UploadPhoto("upload-category-photo", productCategoryModel.photo);
-
                 productCategoryModel.id = Guid.NewGuid();
-
-                ProductCategoryModel prodCatModel = new ProductCategoryModel() 
-                { 
-                  id = productCategoryModel.id, 
-                  en_name = new TranslitExtension().Run(productCategoryModel.ru_name), 
-                  ru_name = productCategoryModel.ru_name,
-                  is_last = productCategoryModel.is_last,
-                  parentid = productCategoryModel.parentid,
-                  photo = photoLinq
-                };
-                _context.Add(prodCatModel);
+                productCategoryModel.en_name = new TranslitExtension().Run(productCategoryModel.ru_name);
+                _context.Add(productCategoryModel);
 
                 CategoryModel catModel = new CategoryModel() { id = productCategoryModel.id, en_name = new TranslitExtension().Run(productCategoryModel.ru_name), name = productCategoryModel.ru_name };
 
