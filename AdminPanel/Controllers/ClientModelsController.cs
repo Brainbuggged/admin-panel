@@ -70,7 +70,7 @@ namespace AdminPanel.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("id,photo,number,name,surname,patronymic,phone,balance,card_number,card_date,cvv,login,password,email,role,vendorid,Image")] ClientViewModel clientModel)
+        public async Task<IActionResult> Create([Bind("id,photo,number,name,surname,patronymic,phone,balance,card_number,card_date,cvv,login,password,email,role,photo,vendorid")] ClientModel clientModel)
         {
             //TODO: Photo upload
             if (ModelState.IsValid)
@@ -82,32 +82,6 @@ namespace AdminPanel.Controllers
                 clientModel.number = new TranslitExtension().MakeName($"{clientModel.surname}{clientModel.name}{clientModel.patronymic}");
                 clientModel.password = new EncrypterExtension().Encrypt(clientModel.password);
 
-                string url = "http://77.73.67.101:93/api/Upload/upload-profile-photo";
-                var request = (HttpWebRequest)WebRequest.Create(url);
-
-                if (clientModel.Image.Length > 0)
-                {
-                    using (var ms = new MemoryStream())
-                    {
-                        clientModel.Image.CopyTo(ms);
-                        var fileBytes = ms.ToArray();
-                        string s = Convert.ToBase64String(fileBytes);
-                        // act on the Base64 data
-                        var postData = clientModel.Image;
-                        var data = fileBytes;
-
-                        request.Method = "POST";
-                        request.ContentType = "image";
-
-                        using (var stream = request.GetRequestStream())
-                        {
-                            stream.Write(data, 0, data.Length);
-                        }
-                    }
-                }
-
-
-                var response = (HttpWebResponse)request.GetResponse();
 
                 _context.Add(clientModel);
                 await _context.SaveChangesAsync();
