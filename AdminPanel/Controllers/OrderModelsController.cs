@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading.Tasks;
 using AdminPanel.Models.Models.NSI_Order;
+using AdminPanel.Models;
 
 namespace AdminPanel.Controllers
 {
@@ -22,7 +23,7 @@ namespace AdminPanel.Controllers
         // GET: OrderModelsController
         public async Task<IActionResult> Index()
         {
-            return View(await _context.orders.Include(c => c.vendor).Include(c => c.client).Include(x => x.products).ToListAsync());
+            return View(await _context.orders.Include(c => c.vendor).Include(c => c.client).Include(x => x.products).Include(x => x.status_history).ToListAsync());
         }
 
         // GET: OrderModelsController/Details/5
@@ -86,6 +87,20 @@ namespace AdminPanel.Controllers
             return Json(list);
         }
 
+
+        public JsonResult GetStatusChangeModel(Guid orderModelId)
+        {
+            List<OrderStatusChangeModelView> list = new List<OrderStatusChangeModelView>();
+
+            var model = _context.order_status_changes.Where(x => x.orderid == orderModelId).AsNoTracking();
+
+            foreach (var item in model)
+            {
+                list.Add(new OrderStatusChangeModelView { old_status = item.old_status.GetText(), new_status = item.new_status.GetText(),date = item.date });
+            }
+
+            return Json(list);
+        }
 
         // GET: OrderModelsController/Delete/5
         public ActionResult Delete(int id)

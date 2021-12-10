@@ -36,13 +36,13 @@ namespace AdminPanel.Models.Models.NSI_Client
 		[Display(Name = "Баланс")]
 
 		public double balance { get; set; }
-		[Display(Name = "Номер корзины")]
+		[Display(Name = "Номер банковской карты")]
 
 		public string card_number { get; set; }
 		[Display(Name = "Дата создания корзины")]
 
 		public DateTime card_date { get; set; }
-		[Display(Name = "Банковская карта")]
+		[Display(Name = "CVV")]
 
 		public string cvv { get; set; }
 		[Display(Name = "Логин")]

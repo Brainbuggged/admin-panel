@@ -5,10 +5,10 @@
 }
 
 <h1>Заказы</h1>
-<table id="orders" class="display" style="width:100%;height:50%">
+<table id="orders" class="display" style="width:25%;height:50%">
     <thead>
         <tr>
-            <td>
+            <td hidden>
                 @Html.DisplayNameFor(model => model.id)
             </td>
             <th>
@@ -39,53 +39,53 @@
             <th>
                 Клиент
             </th>
-
         </tr>
     </thead>
     <tbody>
         @foreach (var item in Model)
         {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.number)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.position_count)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.positions_prise)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.delivery_prise)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.total_prise)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.date)
-            </td>
-            <td>
-                @item.status.GetText()
-            </td>
-            <td>
-                @{
-                    var vendor = item.vendor.surname + item.vendor.name;
-                }
-                @vendor
-            </td>
-            <td>
-                @{
-                    var client = item.client.surname + item.client.name;
-                }
-                @client
-            </td>
-        </tr>
+            <tr>
+                <td hidden>
+                    @Html.DisplayFor(modelItem => item.id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.number)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.position_count)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.positions_prise)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.delivery_prise)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.total_prise)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.date)
+                </td>
+                <td>
+                    @item.status.GetText()
+                </td>
+                <td>
+                    @{
+                        var vendor = item.vendor.surname + " " +  item.vendor.name;
+                    }
+                    @vendor
+                </td>
+                <td>
+                    @{
+                        var client = item.client.surname + " " + item.client.name;
+                    }
+                    @client
+                </td>
+            </tr>
         }
     </tbody>
 </table>
+
 <div id="divOrderProducts">
     @*<p id="pTasks">@tasksTitle</p>*@
     <table id="OrderModelProducts" class="cell-border">
@@ -105,26 +105,41 @@
     </table>
 </div>
 
+<div id="divOrderStatusChangeModel">
+    <table id="OrderStatusChangeModel" class="cell-border">
+        <thead>
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.status_history.First().old_status)</th>
+                <th>@Html.DisplayNameFor(model => model.status_history.First().new_status)</th>
+                <th>@Html.DisplayNameFor(model => model.status_history.First().date)</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+</div>
+
 <script>
     $(document).ready(function () {
         $('#orders').DataTable({
             "language": jsonLanguageDataTable,
-            "select": true
+            "select": true,
+            "pageLength": 5
         });
+
         var $orderModelProducts = $('#OrderModelProducts tbody');
-        createDataTables(false, true, true, false);
+        var $orderStatusChangeModel= $('#OrderStatusChangeModel tbody');
 
-        var currentOrderModel;
-    //$(document).ready(function () {
-    //    var $orderProductModels = $('#OrderProductModels tbody');
-    //    var $inventoryCountTasks = $('#InventoryCount_Tasks tbody');
 
-    //    createDataTables(true, true, true, true);
-        var OrderModelProducts;
+        var firstTry = false;
+        //var OrderModelProducts;
+        //var OrderStatusChangeModel;
+        //createDataTables(true, true);
+        createDataTables(true, true);
+
         function getOrderProductModels(
             link,
-            rowData,
-            destroyLines) {
+            rowData) {
             ajaxRequestTasks = $.ajax({
                 type: "GET",
                 url: link,
@@ -132,32 +147,58 @@
                 dataType: 'json',
                 contentType: 'application/json; charset=utf-8',
                 success: function (data) {
-                    //InventoryCount_Tasks.destroy();
                     $('#OrderModelProducts tbody').empty();
 
                     orderProductModels = data;
                     var html;
                     for (var i = 0; i < orderProductModels.length; i++) {
-                        html += '<tr><td>' + orderProductModels[i].name + '</td>' +
+                        html += '<tr><td>'+
+                            '<a href="http://budevice.ru/catalog/"' + orderProductModels[i].product_number + '>' + orderProductModels[i].name + '</a>' + '</td > '+
                             '<td>' + orderProductModels[i].category_name + '</td>' +
                             '<td>' + orderProductModels[i].brand + '</td>' +
                             '<td>' + orderProductModels[i].prise + '</td>' +
                             '<td>' + orderProductModels[i].count + '</td>' +
                             '<td>' + orderProductModels[i].total_prise + '</td>' +
-                            '<td>' + orderProductModels[i].photo + '</td>' +
+                            '<td>' +
+                            '<img src="https://drive.google.com/uc?export=view&id=' + orderProductModels[i].photo + '" width="100px" height="100px" />'
+                            '</td>' +
+                            '</tr>';
+                    }
+                    $('#OrderModelProducts tbody').append(html);
+
+
+                },
+                error: function (er) {
+                    if (er.statusText == 'abort') {
+                        return;
+                    }
+                    alert("An error occured");
+                }
+            });
+        }
+
+        function getOrderStatusChangeModel(
+            link,
+            rowData) {
+            ajaxRequestTasks = $.ajax({
+                type: "GET",
+                url: link,
+                data: { orderModelId: rowData },
+                dataType: 'json',
+                contentType: 'application/json; charset=utf-8',
+                success: function (data) {
+                    $('#OrderStatusChangeModel tbody').empty();
+
+                    orderStatusChangeModels = data;
+                    var html;
+                    for (var i = 0; i < orderStatusChangeModels.length; i++) {
+                        html += '<tr><td>' + orderStatusChangeModels[i].old_status + '</td>' +
+                            '<td>' + orderStatusChangeModels[i].new_status+ '</td>' +
+                            '<td>' + orderStatusChangeModels[i].date + '</td>' +
                             '</tr>';
                     }
 
-                    $('#OrderModelProducts tbody').append(html);
-
-                    //$orderModelProducts.destroy();
-                    OrderModelProducts.destroy();
-                    $orderModelProducts.empty();
-
-                    //InventoryCount_Tasks.destroy();
-                    //$inventoryCountTasks.empty();
-
-                    createDataTables(false, true, true, false);
+                    $('#OrderStatusChangeModel tbody').append(html);
                 },
                 error: function (er) {
                     if (er.statusText == 'abort') {
@@ -173,11 +214,26 @@
             currentOrderModel = currentRow;
             var modelRow = $('#orders').DataTable().row(currentRow).data();
 
+
+            if (firstTry) {
+                OrderModelProducts.destroy();
+                $orderModelProducts.empty();
+                OrderStatusChangeModel.destroy();
+                $orderStatusChangeModel.empty();
+                firstTry = true;
+            }
             getOrderProductModels(
                 '@Url.Action("GetOrderProductModels", "OrderModels")',
-                modelRow[0],
-                true
+                modelRow[0]
             );
+
+            getOrderStatusChangeModel(
+                '@Url.Action("GetStatusChangeModel", "OrderModels")',
+                modelRow[0]
+            );
+
+
+
         });
     });
     //}
