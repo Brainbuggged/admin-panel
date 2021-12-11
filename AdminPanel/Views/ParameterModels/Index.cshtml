@@ -7,7 +7,7 @@
 <h1>Параметры</h1>
 
 <p>
-    <a asp-action="Create">Создать новый</a>
+    <a asp-action="Create">Создать параметр для категории</a>
 </p>
 <table id="parameters" class="display" style="width:100%">
     <thead>
@@ -31,7 +31,7 @@
                 @Html.DisplayFor(modelItem => item.name)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.id">Поменять</a> 
+                <a asp-action="Edit" asp-route-id="@item.id">Изменить</a> 
             </td>
         </tr>
 }

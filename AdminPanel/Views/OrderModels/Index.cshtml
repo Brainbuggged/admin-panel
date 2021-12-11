@@ -5,7 +5,7 @@
 }
 
 <h1>Заказы</h1>
-<table id="orders" class="display" style="width:25%;height:50%">
+<table id="orders" class="display">
     <thead>
         <tr>
             <td hidden>
@@ -44,7 +44,7 @@
     <tbody>
         @foreach (var item in Model)
         {
-            <tr>
+            <tr style="cursor:pointer">
                 <td hidden>
                     @Html.DisplayFor(modelItem => item.id)
                 </td>
@@ -55,13 +55,22 @@
                     @Html.DisplayFor(modelItem => item.position_count)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.positions_prise)
+                    @{
+                        var positions_prise = Math.Round(item.positions_prise, 2);
+                    }
+                    @positions_prise руб
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.delivery_prise)
+                    @{
+                        var delivery_prise = Math.Round(item.delivery_prise, 2);
+                    }
+                    @delivery_prise руб
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.total_prise)
+                    @{
+                        var total_prise = Math.Round(item.total_prise, 2);
+                    }
+                    @total_prise руб
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.date)
@@ -85,25 +94,27 @@
         }
     </tbody>
 </table>
+<hr />
 
 <div id="divOrderProducts">
     @*<p id="pTasks">@tasksTitle</p>*@
     <table id="OrderModelProducts" class="cell-border">
         <thead>
             <tr>
+                <th>@Html.DisplayNameFor(model => model.products.First().photo)</th>
                 <th>@Html.DisplayNameFor(model => model.products.First().name)</th>
                 <th>@Html.DisplayNameFor(model => model.products.First().category_name)</th>
                 <th>@Html.DisplayNameFor(model => model.products.First().brand)</th>
                 <th>@Html.DisplayNameFor(model => model.products.First().prise)</th>
                 <th>@Html.DisplayNameFor(model => model.products.First().count)</th>
                 <th>@Html.DisplayNameFor(model => model.products.First().total_prise)</th>
-                <th>@Html.DisplayNameFor(model => model.products.First().photo)</th>
             </tr>
         </thead>
         <tbody>
         </tbody>
     </table>
 </div>
+<hr />
 
 <div id="divOrderStatusChangeModel">
     <table id="OrderStatusChangeModel" class="cell-border">
@@ -152,16 +163,17 @@
                     orderProductModels = data;
                     var html;
                     for (var i = 0; i < orderProductModels.length; i++) {
-                        html += '<tr><td>'+
+                        html += '<tr>' + 
+                            '<td>' +
+                            '<img src="https://drive.google.com/uc?export=view&id=' + orderProductModels[i].photo + '" width="100px" height="100px" />' +
+                            '</td>' +
+                            '<td>'+
                             '<a href="http://budevice.ru/catalog/"' + orderProductModels[i].product_number + '>' + orderProductModels[i].name + '</a>' + '</td > '+
                             '<td>' + orderProductModels[i].category_name + '</td>' +
                             '<td>' + orderProductModels[i].brand + '</td>' +
-                            '<td>' + orderProductModels[i].prise + '</td>' +
+                            '<td>' + orderProductModels[i].prise + ' руб' + '</td>' +
                             '<td>' + orderProductModels[i].count + '</td>' +
-                            '<td>' + orderProductModels[i].total_prise + '</td>' +
-                            '<td>' +
-                            '<img src="https://drive.google.com/uc?export=view&id=' + orderProductModels[i].photo + '" width="100px" height="100px" />'
-                            '</td>' +
+                            '<td>' + orderProductModels[i].total_prise + ' руб' + '</td>' +
                             '</tr>';
                     }
                     $('#OrderModelProducts tbody').append(html);
@@ -192,10 +204,19 @@
                     orderStatusChangeModels = data;
                     var html;
                     for (var i = 0; i < orderStatusChangeModels.length; i++) {
-                        html += '<tr><td>' + orderStatusChangeModels[i].old_status + '</td>' +
-                            '<td>' + orderStatusChangeModels[i].new_status+ '</td>' +
-                            '<td>' + orderStatusChangeModels[i].date + '</td>' +
-                            '</tr>';
+                        if(orderStatusChangeModels[i].old_status == orderStatusChangeModels[i].new_status){
+                            html += '<tr><td>'+'</td>' +
+                                '<td>' + orderStatusChangeModels[i].new_status + '</td>' +
+                                '<td>' + orderStatusChangeModels[i].date + '</td>' +
+                                '</tr>';
+                        }
+                        else{
+                            html += '<tr><td>' + orderStatusChangeModels[i].old_status + '</td>' +
+                                '<td>' + orderStatusChangeModels[i].new_status + '</td>' +
+                                '<td>' + orderStatusChangeModels[i].date + '</td>' +
+                                '</tr>';
+
+                        }
                     }
 
                     $('#OrderStatusChangeModel tbody').append(html);

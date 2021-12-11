@@ -26,11 +26,11 @@ namespace AdminPanel.Controllers
             var onlineShopContext = new List<ProductModel>();
             if (is_checked)
             {
-                onlineShopContext = _context.products.Include(c => c.vendor).Include(c => c.category).ToList();
+                onlineShopContext = _context.products.Include(c => c.vendor).Include(c => c.category).Include(p => p.photoes).ToList();
             }
             else
             {
-                onlineShopContext = _context.products.Where(x => x.status == Models.ProductStatus.OjidaetProverki).Include(c => c.vendor).Include(c => c.category).ToList();
+                onlineShopContext = _context.products.Where(x => x.status == Models.ProductStatus.OjidaetProverki).Include(c => c.vendor).Include(c => c.category).Include(p => p.photoes).ToList();
 
             }
             ViewData["awaiters"] = !is_checked;

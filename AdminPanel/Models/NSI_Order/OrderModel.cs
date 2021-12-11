@@ -18,16 +18,16 @@ namespace AdminPanel.Models.Models.NSI_Order
 
 		public string number { get; set; }
 
-		[Display(Name = "Цена товара")]
+		[Display(Name = "Стоимость товаров")]
 
 		public double positions_prise { get; set; }
 		[Display(Name = "Стоимость доставки")]
 
 		public double delivery_prise { get; set; }
-		[Display(Name = "Общая выручка")]
+		[Display(Name = "Стоимость заказа")]
 
 		public double total_prise { get; set; }
-		[Display(Name = "Количество проданных товаров")]
+		[Display(Name = "Количество товаров в заказе")]
 		public int position_count { get; set; }
 
 		public double x { get; set; }

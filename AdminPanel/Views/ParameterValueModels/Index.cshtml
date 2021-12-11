@@ -7,19 +7,19 @@
 <h1>Значения параметров</h1>
 
 <p>
-    <a asp-action="Create">Создать новый</a>
+    <a asp-action="Create">Создать значение для параметра</a>
 </p>
 <table  id="parameterValues" class="display" style="width:100%">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.value)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.parameter.category)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.parameter)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.value)
             </th>
             <th></th>
         </tr>
@@ -28,13 +28,13 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.value)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.parameter.category.name)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.parameter.name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.value)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.id">Изменить</a> 
