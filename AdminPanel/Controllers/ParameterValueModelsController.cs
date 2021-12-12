@@ -116,7 +116,7 @@ namespace AdminPanel.Controllers
         // POST: CategoryModelsController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("value, parameterid")] ParameterValueModel parameterValueModel)
+        public async Task<IActionResult> Edit(Guid id, [Bind("id,value, parameterid")] ParameterValueModel parameterValueModel)
         {
             if (id != parameterValueModel.id)
             {
