@@ -4,10 +4,17 @@
     ViewData["Title"] = "Products";
 }
 
+<<<<<<< HEAD
 <h1>Категории товаров</h1>
 
 <p>
     <a asp-action="Create">Создать новую категорию</a>
+=======
+<h1>Категории</h1>
+
+<p>
+    <a asp-action="Create">Создать категорию</a>
+>>>>>>> 0ffa4c348f23a16d6c5ded2bd83af6eb111b2acf
 </p>
 <table id="productCategory" class="display" style="width:100%">
     <thead>
@@ -24,10 +31,6 @@
                 <p>Название на английском</p>
 
                 @*@Html.DisplayNameFor(model => model.en_name)*@
-            </th>
-            <th>
-                <p>Является ли подкаталогом</p>
-                @*@Html.DisplayNameFor(model => model.is_last)*@
             </th>
             <th>
                 <p>Фото</p>
@@ -61,9 +64,6 @@
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.en_name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.is_last)
                 </td>
                 <td>
                     @{

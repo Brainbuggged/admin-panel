@@ -10,6 +10,10 @@
     <thead>
         <tr>
             <th>
+                <p>Фото</p>
+                @*@Html.DisplayNameFor(model => model.photo)*@
+            </th>
+            <th>
                 <p>Фамилия</p>
                 @*@Html.DisplayNameFor(model => model.surname)*@
             </th>
@@ -28,10 +32,6 @@
             <th>
                 <p>Почта</p>
                 @*@Html.DisplayNameFor(model => model.email)*@
-            </th>
-            <th>
-                <p>Фото</p>
-                @*@Html.DisplayNameFor(model => model.photo)*@
             </th>
             <th>
                 <p>Рейтинг</p>
@@ -54,6 +54,12 @@
         <tr>
             <td>
                 @{
+                    var photoimage = item.photo;
+                }
+                <img src="https://drive.google.com/uc?export=view&id=@photoimage" width="100px" height="100px" />
+            </td>
+            <td>
+                @{
                     var reference = "http://budevice.ru/vendor/" + @Html.DisplayFor(modelItem => item.number);
                 }
                 <a href="@reference">@Html.DisplayFor(modelItem => item.surname)</a>
@@ -69,12 +75,6 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.email)
-            </td>
-            <td>
-                @{
-                    var photoimage = item.photo;
-                }
-                <img src="https://drive.google.com/uc?export=view&id=@photoimage" width="100px" height="100px" />
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.rating)

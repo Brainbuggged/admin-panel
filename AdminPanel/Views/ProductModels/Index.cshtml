@@ -6,7 +6,7 @@
 
 <h1>Товары</h1>
 
-<table id="products" class="display" style="width:100%">
+<table id="products" class="display" style="width:100%;">
     <thead>
         <tr>
             <th>
@@ -14,12 +14,12 @@
                 @*@Html.DisplayNameFor(model => model.publication_date)*@
             </th>
             <th>
-                @*<p>Название</p>*@
-                @Html.DisplayNameFor(model => model.name)
+                <p>Фото</p>
+                @*@Html.DisplayNameFor(model => model.country)*@
             </th>
             <th>
-                <p>Страна</p>
-                @*@Html.DisplayNameFor(model => model.country)*@
+                @*<p>Название</p>*@
+                @Html.DisplayNameFor(model => model.name)
             </th>
             <th>
                 <p>Город</p>
@@ -63,13 +63,13 @@
                 @Html.DisplayFor(modelItem => item.publication_date)
             </td>
             <td>
+                <img src="https://drive.google.com/uc?export=view&id=@Html.DisplayFor(modelItem => item.photoes.First().linq)" width="100" height="100" />
+            </td>
+            <td>
                 @{ 
                     var reference = "http://budevice.ru/product/" + @Html.DisplayFor(modelItem => item.number);
                 }
                 <a href="@reference">@Html.DisplayFor(modelItem => item.name)</a>  
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.country)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.city)
@@ -81,7 +81,7 @@
                 @item.type.GetText()
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.prise)
+                @Html.DisplayFor(modelItem => item.prise) руб
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.count)

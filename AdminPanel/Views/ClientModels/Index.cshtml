@@ -6,11 +6,15 @@
 
 <h1>Клиенты</h1>
 <p>
-    <a asp-action="Create">Создать нового</a>
+    <a asp-action="Create">Создать клиента</a>
 </p>
 <table id="clients" class="display" style="width:100%">
     <thead>
         <tr>
+            <th>
+                <p>Фото</p>
+                @*@Html.DisplayNameFor(model => model.photo)*@
+            </th>
             <th>
                 <p>Фамилия</p>
                 @*@Html.DisplayNameFor(model => model.surname)*@
@@ -35,16 +39,18 @@
                 <p>Роль</p>
                 @*@Html.DisplayNameFor(model => model.role)*@
             </th>
-            <th>
-                <p>Фото</p>
-                @*@Html.DisplayNameFor(model => model.photo)*@
-            </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
 @foreach (var item in Model) {
         <tr>
+            <td>
+                @{
+                    var photoimage = item.photo;
+                }
+                <img src="https://drive.google.com/uc?export=view&id=@photoimage" width="100" height="100" />
+            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.surname)
             </td>
@@ -62,12 +68,6 @@
             </td>
             <td>
                 <p>@item.role.GetText()</p>
-            </td>
-            <td>
-                @{
-                    var photoimage = item.photo;
-                }
-                <img src="https://drive.google.com/uc?export=view&id=@photoimage" width="100px" height="100px" />
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.id">Изменить</a>
