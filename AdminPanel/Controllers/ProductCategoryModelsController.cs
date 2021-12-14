@@ -141,15 +141,16 @@ namespace AdminPanel.Controllers
             {
                 try
                 {
-                    CategoryModel catModel = new CategoryModel() { id = productCategoryModel.id, en_name = productCategoryModel.en_name, name = productCategoryModel.ru_name };
-
+                    CategoryModel catModel = _parcontext.categories.Where(x => x.id == productCategoryModel.id).First();
+                    catModel.en_name = productCategoryModel.en_name;
+                    catModel.name = productCategoryModel.ru_name;
                     _context.Update(productCategoryModel);
                     await _context.SaveChangesAsync();
 
                     _parcontext.Update(catModel);
                     await _parcontext.SaveChangesAsync();
                 }
-                catch (DbUpdateConcurrencyException)
+                catch (DbUpdateConcurrencyException ex)
                 {
                     if (!ProductCategoryModelExists(productCategoryModel.id))
                     {
