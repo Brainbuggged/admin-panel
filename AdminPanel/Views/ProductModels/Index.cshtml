@@ -67,7 +67,7 @@
             </td>
             <td>
                 @{ 
-                    var reference = "http://budevice.ru/product/" + @Html.DisplayFor(modelItem => item.number);
+                    var reference = "http://budevice.ru/product/" +  item.number;
                 }
                 <a href="@reference">@Html.DisplayFor(modelItem => item.name)</a>  
             </td>
