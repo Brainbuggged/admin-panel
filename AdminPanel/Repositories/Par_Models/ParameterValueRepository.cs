@@ -15,7 +15,7 @@ namespace AdminPanel.Core.Repositories.Par_Models
 
 		public ParameterValueRepository()
 		{
-			connectionString = new SettingsExtension().GetParContextConnectionString();
+			connectionString = new SettingsLibrary.ConnectionSettings().GetAppContextConnectionString();
 		}
 
 		internal IDbConnection Connection

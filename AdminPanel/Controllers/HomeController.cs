@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using AdminPanel.Models;
-using AdminPanel.Core.Repositories.NSI_Product;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using AdminPanel.Core.Repositories.NSI_Client;
 using AdminPanel.Core.Repositories.NSI_Logger;

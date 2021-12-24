@@ -17,7 +17,7 @@ namespace AdminPanel.Core.Repositories.NSI_Client
 
 		public CartItemRepository()
 		{
-			connectionString = new SettingsExtension().GetAppContextConnectionString();
+			connectionString = new SettingsLibrary.ConnectionSettings().GetAppContextConnectionString();
 		}
 
 		internal IDbConnection Connection

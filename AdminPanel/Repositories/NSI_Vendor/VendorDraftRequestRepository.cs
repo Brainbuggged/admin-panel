@@ -13,7 +13,7 @@ namespace AdminPanel.Core.Repositories.NSI_Vendor
 
 		public VendorDraftRequestRepository()
 		{
-			connectionString = new SettingsExtension().GetAppContextConnectionString();
+			connectionString = new SettingsLibrary.ConnectionSettings().GetAppContextConnectionString();
 		}
 
 		internal IDbConnection Connection

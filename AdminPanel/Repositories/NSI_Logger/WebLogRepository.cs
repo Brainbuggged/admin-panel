@@ -13,7 +13,7 @@ namespace AdminPanel.Core.Repositories.NSI_Logger
 		public string connectionString { get; set; }
 		public WebLogRepository()
 		{
-			connectionString = new SettingsExtension().GetAppContextConnectionString();
+			connectionString = new SettingsLibrary.ConnectionSettings().GetAppContextConnectionString();
 		}
 		internal IDbConnection Connection
 		{

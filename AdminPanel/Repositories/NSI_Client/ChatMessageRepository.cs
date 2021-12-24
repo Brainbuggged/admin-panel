@@ -15,7 +15,7 @@ namespace AdminPanel.Core.Repositories.NSI_Client
 
 		public ChatMessageRepository()
 		{
-			connectionString = new SettingsExtension().GetAppContextConnectionString();
+			connectionString = new SettingsLibrary.ConnectionSettings().GetAppContextConnectionString();
 		}
 
 		internal IDbConnection Connection

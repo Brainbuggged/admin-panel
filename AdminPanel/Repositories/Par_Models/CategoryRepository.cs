@@ -14,7 +14,7 @@ namespace AdminPanel.Core.Repositories.Par_Models
 
 		public CategoryRepository()
 		{
-			connectionString = new SettingsExtension().GetParContextConnectionString();
+			connectionString = new SettingsLibrary.ConnectionSettings().GetAppContextConnectionString();
 		}
 
 		internal IDbConnection Connection

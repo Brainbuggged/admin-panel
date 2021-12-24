@@ -18,7 +18,7 @@ namespace AdminPanel.Core.Repositories.NSI_Order
 
 		public OrderRepository()
 		{
-			connectionString = new SettingsExtension().GetAppContextConnectionString();
+			connectionString = new SettingsLibrary.ConnectionSettings().GetAppContextConnectionString();
 		}
 
 		internal IDbConnection Connection
@@ -31,33 +31,6 @@ namespace AdminPanel.Core.Repositories.NSI_Order
 
 
 		// /* GET */
-		public async Task<IEnumerable<OrderForGrouping>> GetByClientIdAsync(Guid clientId)
-		{
-			using (IDbConnection dbConnection = Connection)
-			{
-				dbConnection.Open();
-				var _request =
-					@"select " +
-					"ord.date, " +
-					"ord.id, " +
-					"ord.number, " +
-					"ord.position_count, " +
-					"ord.total_prise, " +
-					"ord.status, " +
-					"concat(ven.surname, "
-					+ '\u0027' + '\u0027' +
-					",ven.name,"
-					+ '\u0027'+'\u0027' +
-					@",ven.patronymic) as vendor_name " +
-					"from orders ord " +
-					"left join " +
-					"vendors ven " +
-					"on ord.vendorid = " +
-					"ven.id " +
-					"where ord.clientid = " + '\u0027' + clientId + '\u0027';
-				return await dbConnection.QueryAsync<OrderForGrouping>(_request);
-			}
-		}
 		public async Task<IEnumerable<ResponseVendorOrder>> GetByVendorIdAsync(Guid vendorid)
 		{
 			using (IDbConnection dbConnection = Connection)

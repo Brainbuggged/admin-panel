@@ -16,7 +16,7 @@ namespace AdminPanel.Core.Repositories.NSI_Client
 
 		public FavouriteVendorRepository()
 		{
-			connectionString = new SettingsExtension().GetAppContextConnectionString();
+			connectionString = new SettingsLibrary.ConnectionSettings().GetAppContextConnectionString();
 		}
 
 		internal IDbConnection Connection
