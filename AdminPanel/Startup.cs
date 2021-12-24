@@ -26,10 +26,10 @@ namespace AdminPanel
         {
             services.AddControllersWithViews();
             services.AddDbContext<OnlineShopContext>(options =>
-                options.UseNpgsql(new SettingsExtension().GetAppContextConnectionString()));
+                options.UseNpgsql(new SettingsLibrary.ConnectionSettings().GetAppContextConnectionString()));
 
             services.AddDbContext<ParDBContext>(options =>
-                options.UseNpgsql(new SettingsExtension().GetParContextConnectionString()));
+                options.UseNpgsql(new SettingsLibrary.ConnectionSettings().GetParContextConnectionString()));
 
             services.AddResponseCompression(options => {
                 options.EnableForHttps = true;

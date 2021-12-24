@@ -13,7 +13,6 @@ using System.Net;
 using System.IO;
 using System.Text;
 using System.Net.Http;
-using AdminPanel.Services;
 using AdminPanel.Extensions;
 
 namespace AdminPanel.Controllers

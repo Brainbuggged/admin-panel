@@ -1,5 +1,4 @@
 ﻿using Microsoft.Extensions.Caching.Memory;
-using AdminPanel.Services;
 using AdminPanel.ViewModels.Order.ChangeOrderStatus.Query;
 using AdminPanel.ViewModels.Product.CreateDraftProduct.Query;
 using AdminPanel.ViewModels.Product.CreateProduct.Query;
